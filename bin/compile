@@ -12,7 +12,7 @@ subtitle() {
 
 pwd
 ls -la
-exit 0
+#exit 0
 
 
 BUILD_DIR=$1
