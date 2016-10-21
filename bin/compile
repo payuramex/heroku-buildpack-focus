@@ -22,6 +22,8 @@ mkdir -p $VENDOR_DIR
 pwd
 ls -la
 echo "--------"
+ls -la ../
+echo "--------"
 ls -la ../../
 echo "--------"
 cp -pr ../../lib/mecab-0.996.tar.gz $CACHE_DIR/$VENDOR_DIR/
