@@ -27,9 +27,11 @@ echo "--------"
 ls -la ../../bin/
 echo "--------"
 subtitle "make VENDOR_DIR"
+mkdir -p $CACHE_DIR
 cd $CACHE_DIR
 mkdir -p $VENDOR_DIR
 subtitle "make APP_DIR"
+mkdir -p $BUILD_DIR
 cd $BUILD_DIR
 mkdir -p $APP_DIR
 curl -s -L https://github.com/milabo/heroku-buildpack-focus/blob/master/lib/mecab-0.996.tar.gz > $CACHE_DIR/$VENDOR_DIR/mecab-0.996.tar.gz
