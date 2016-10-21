@@ -72,3 +72,7 @@ mkdir -p $PROFILE_DIR
 #mkdir -p $(dirname $PROFILE_PATH)
 echo 'export PATH="$PATH:$BUILD_DIR/$LIB_DIR/mecab-0.996/bin"'>> $BUILD_DIR/$PROFILE_DIR/$PROFILE_PATH/mecab.sh
 echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$BUILD_DIR/$LIB_DIR/mecab-0.996/lib"'>> $BUILD_DIR/$PROFILE_DIR/$PROFILE_PATH/mecab.sh
+
+title "confirm mecab.sh"
+cat $BUILD_DIR/$PROFILE_DIR/$PROFILE_PATH/mecab.sh
+echo "------------------------"
