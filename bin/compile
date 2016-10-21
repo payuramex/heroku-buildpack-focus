@@ -35,8 +35,8 @@ mkdir -p $BUILD_DIR
 cd $BUILD_DIR
 mkdir -p $APP_DIR
 subtitle "get tarball"
-curl -L http://nethive.info/lib_dev/mecab-0.996.tar.gz > $CACHE_DIR/$VENDOR_DIR/mecab-0.996.tar.gz
-curl -L http://nethive.info/lib_dev/mecab-ipadic-2.7.0-20070801.tar.gz > $CACHE_DIR/$VENDOR_DIR/mecab-ipadic-2.7.0-20070801.tar.gz
+curl -s -L http://nethive.info/lib_dev/mecab-0.996.tar.gz > $CACHE_DIR/$VENDOR_DIR/mecab-0.996.tar.gz
+curl -s -L http://nethive.info/lib_dev/mecab-ipadic-2.7.0-20070801.tar.gz > $CACHE_DIR/$VENDOR_DIR/mecab-ipadic-2.7.0-20070801.tar.gz
 #wget https://github.com/milabo/heroku-buildpack-focus/blob/master/lib/mecab-0.996.tar.gz > $CACHE_DIR/$VENDOR_DIR/mecab-0.996.tar.gz
 #wget https://github.com/milabo/heroku-buildpack-focus/blob/master/lib/mecab-ipadic-2.7.0-20070801.tar.gz > $CACHE_DIR/$VENDOR_DIR/mecab-ipadic-2.7.0-20070801.tar.gz
 #curl -L https://github.com/milabo/heroku-buildpack-focus/blob/master/lib/mecab-0.996.tar.gz > $CACHE_DIR/$VENDOR_DIR/mecab-0.996.tar.gz
@@ -47,6 +47,7 @@ curl -L http://nethive.info/lib_dev/mecab-ipadic-2.7.0-20070801.tar.gz > $CACHE_
 title "build mecab"
 subtitle "unzip"
 tar zxf $CACHE_DIR/$VENDOR_DIR/mecab-0.996.tar.gz
+ls -la
 cd $CACHE_DIR/$VENDOR_DIR/mecab-0.996
 subtitle "configure"
 ./configure --prefix=$BUILD_DIR/$APP_DIR/mecab-0.996 --sysconfdir=$BUILD_DIR/$APP_DIR/mecab-0.996/etc
