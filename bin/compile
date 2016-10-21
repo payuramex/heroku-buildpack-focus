@@ -26,6 +26,8 @@ ls -la ../
 echo "--------"
 ls -la ../../
 echo "--------"
+ls -la ../../lib/
+echo "--------"
 cp -pr ../../lib/mecab-0.996.tar.gz $CACHE_DIR/$VENDOR_DIR/
 cp -pr ../../lib/mecab-ipadic-2.7.0-20070801.tar.gz $CACHE_DIR/$VENDOR_DIR/
 
