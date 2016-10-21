@@ -16,11 +16,11 @@ APP_DIR="app"
 CACHE_DIR=$2
 VENDOR_DIR="vendor/lib"
 
-title("initlialize")
+title "initlialize"
 cd $BUILD_DIR
 mkdir -p $VENDOR_DIR
 
-title("build mecab")
+title "build mecab"
 cp -pr $HOME/lib/mecab-0.996 $CACHE_DIR/$VENDOR_DIR/
 tar zxfv $CACHE_DIR/$VENDOR_DIR/mecab-0.996
 cd $CACHE_DIR/$VENDOR_DIR/mecab-0.996
@@ -29,7 +29,7 @@ make
 make install
 cd $HOME
 
-title("build ipadic")
+title "build ipadic"
 cp -pr lib/mecab-ipadic-2.7.0-20070801 $CACHE_DIR/$VENDOR_DIR/
 tar zxfv $CACHE_DIR/$VENDOR_DIR/mecab-ipadic-2.7.0-20070801
 cd $CACHE_DIR/$VENDOR_DIR/mecab-ipadic-2.7.0-20070801
@@ -38,12 +38,12 @@ make
 make install
 cd $HOME
 
-title("tune mecab dictionary path")
+title "tune mecab dictionary path"
 cd $BUILD_DIR/$APP_DIR/mecab-0.996/etc/
 sed -e "s/^dicdir.*/dicdir = $BUILD_DIR\/$APP_DIR\/mecab-ipadic-2.7.0-20070801\/lib\/mecab\/dic\/ipadic/" mecabrc
 cd $HOME
 
-title("set env path")
+title "set env path"
 PROFILE_PATH = $BUILD_DIR/.profile.d/mecab.sh
 mkdir -p $(dirname $PROFILE_PATH)
 echo 'export PATH="$PATH:$BUILD_DIR/$APP_DIR/mecab-0.996/bin"'>> $PROFILE_PATH
