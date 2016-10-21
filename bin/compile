@@ -18,21 +18,22 @@ CACHE_DIR=$2
 VENDOR_DIR="vendor/lib"
 
 title "initlialize"
-subtitle "make VENDOR_DIR"
+subtitle "make CACHE_DIR/VENDOR_DIR"
 mkdir -p $CACHE_DIR
 cd $CACHE_DIR
 mkdir -p $VENDOR_DIR
-subtitle "make APP_DIR"
+subtitle "make BUILD_DIR"
 mkdir -p $BUILD_DIR
-cd $BUILD_DIR
-mkdir -p $APP_DIR
+subtitle "make /APP_DIR/LIB_DIR"
+mkdir -p /$APP_DIR/$LIB_DIR
+
+# mecabのインストール
+title "build mecab"
 subtitle "get tarball"
 curl -s -L http://nethive.info/lib_dev/mecab-0.996.tar.gz > $CACHE_DIR/$VENDOR_DIR/mecab-0.996.tar.gz
-curl -s -L http://nethive.info/lib_dev/mecab-ipadic-2.7.0-20070801.tar.gz > $CACHE_DIR/$VENDOR_DIR/mecab-ipadic-2.7.0-20070801.tar.gz
-
-title "build mecab"
 subtitle "unzip"
-tar zxf $CACHE_DIR/$VENDOR_DIR/mecab-0.996.tar.gz
+cd $CACHE_DIR/$VENDOR_DIR/
+tar zxf mecab-0.996.tar.gz
 subtitle "configure"
 cd ./mecab-0.996
 ./configure --prefix=/$APP_DIR/$LIB_DIR/mecab-0.996 --sysconfdir=/$APP_DIR/$LIB_DIR/mecab-0.996/etc
@@ -40,13 +41,16 @@ subtitle "make"
 make -s
 subtitle "install"
 make install
-cd $HOME
+cd ../../
 subtitle "done"
 
+# ipadicのインストール
 title "build ipadic"
+subtitle "get tarball"
+curl -s -L http://nethive.info/lib_dev/mecab-ipadic-2.7.0-20070801.tar.gz > $CACHE_DIR/$VENDOR_DIR/mecab-ipadic-2.7.0-20070801.tar.gz
 subtitle "unzip"
-cd 
-tar zxf $CACHE_DIR/$VENDOR_DIR/mecab-ipadic-2.7.0-20070801.tar.gz
+cd $CACHE_DIR/$VENDOR_DIR/ 
+tar zxf mecab-ipadic-2.7.0-20070801.tar.gz
 subtitle "configure"
 cd ./mecab-ipadic-2.7.0-20070801
 ./configure --prefix=/$APP_DIR/$LIB_DIR/mecab-ipadic-2.7.0-20070801 --with-charset=utf8 --with-dicdir=/$APP_DIR/$LIB_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic --with-mecab-config=/$APP_DIR/$LIB_DIR/mecab-0.996/bin/mecab-config
@@ -54,7 +58,7 @@ subtitle "make"
 make -s
 subtitle "install"
 make install
-cd $HOME
+cd ../../
 subtitle "done"
 
 title "tune mecab dictionary path"
@@ -77,13 +81,3 @@ mkdir -p $PROFILE_DIR
 #mkdir -p $(dirname $PROFILE_PATH)
 echo 'export PATH="$PATH:/app/lib/mecab-0.996/bin"'>> $BUILD_DIR/$PROFILE_DIR/$PROFILE_PATH/mecab.sh
 echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/lib/mecab-0.996/lib"'>> $BUILD_DIR/$PROFILE_DIR/$PROFILE_PATH/mecab.sh
-
-subtitle "------------"
-ls -la /app/lib/mecab-0.996/bin
-subtitle "------------"
-ls -la /app/lib/mecab-ipadic-2.7.0-20070801
-
-
-#title "confirm mecab.sh"
-#cat $BUILD_DIR/$PROFILE_DIR/$PROFILE_PATH/mecab.sh
-#echo "------------------------"
