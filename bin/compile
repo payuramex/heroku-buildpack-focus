@@ -17,10 +17,6 @@ CACHE_DIR=$2
 VENDOR_DIR="vendor/lib"
 
 title "initlialize"
-cd $CACHE_DIR
-mkdir -p $VENDOR_DIR
-cd $BUILD_DIR
-mkdir -p $APP_DIR
 pwd
 ls -la
 echo "--------"
@@ -30,6 +26,12 @@ ls -la ../../
 echo "--------"
 ls -la ../../bin/
 echo "--------"
+subtitle "make VENDOR_DIR"
+cd $CACHE_DIR
+mkdir -p $VENDOR_DIR
+subtitle "make APP_DIR"
+cd $BUILD_DIR
+mkdir -p $APP_DIR
 curl -s -L https://github.com/milabo/heroku-buildpack-focus/blob/master/lib/mecab-0.996.tar.gz > $CACHE_DIR/$VENDOR_DIR/mecab-0.996.tar.gz
 curl -s -L https://github.com/milabo/heroku-buildpack-focus/blob/master/lib/mecab-ipadic-2.7.0-20070801.tar.gz > $CACHE_DIR/$VENDOR_DIR/mecab-ipadic-2.7.0-20070801.tar.gz
 #cp -pr ../../lib/mecab-0.996.tar.gz $CACHE_DIR/$VENDOR_DIR/
