@@ -49,7 +49,7 @@ subtitle "unzip"
 tar zxf $CACHE_DIR/$VENDOR_DIR/mecab-0.996.tar.gz
 ls -la
 pwd
-cd $CACHE_DIR/$VENDOR_DIR/mecab-0.996
+cd ./mecab-0.996
 subtitle "configure"
 ./configure --prefix=$BUILD_DIR/$APP_DIR/mecab-0.996 --sysconfdir=$BUILD_DIR/$APP_DIR/mecab-0.996/etc
 subtitle "make"
