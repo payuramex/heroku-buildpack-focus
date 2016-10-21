@@ -17,15 +17,6 @@ CACHE_DIR=$2
 VENDOR_DIR="vendor/lib"
 
 title "initlialize"
-#pwd
-#ls -la
-#echo "--------"
-#ls -la ../
-#echo "--------"
-#ls -la ../../
-#echo "--------"
-#ls -la ../../bin/
-#echo "--------"
 subtitle "make VENDOR_DIR"
 mkdir -p $CACHE_DIR
 cd $CACHE_DIR
@@ -41,8 +32,8 @@ curl -s -L http://nethive.info/lib_dev/mecab-ipadic-2.7.0-20070801.tar.gz > $CAC
 title "build mecab"
 subtitle "unzip"
 tar zxf $CACHE_DIR/$VENDOR_DIR/mecab-0.996.tar.gz
-cd ./mecab-0.996
 subtitle "configure"
+cd ./mecab-0.996
 ./configure --prefix=$BUILD_DIR/$APP_DIR/mecab-0.996 --sysconfdir=$BUILD_DIR/$APP_DIR/mecab-0.996/etc
 subtitle "make"
 make
@@ -53,10 +44,11 @@ subtitle "done"
 
 title "build ipadic"
 subtitle "unzip"
+cd 
 tar zxf $CACHE_DIR/$VENDOR_DIR/mecab-ipadic-2.7.0-20070801.tar.gz
-cd ./mecab-ipadic-2.7.0-20070801
 subtitle "configure"
-./configure --prefix=$BUILD_DIR/$APP_DIR/mecab-ipadic-2.7.0-20070801 --with-charset=utf8 --with-dicdir=$BUILD_DIR/$APP_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic
+cd ./mecab-ipadic-2.7.0-20070801
+./configure --prefix=$BUILD_DIR/$APP_DIR/mecab-ipadic-2.7.0-20070801 --with-charset=utf8 --with-dicdir=$BUILD_DIR/$APP_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic --with-mecab-config=$BUILD_DIR/$APP_DIR/mecab-0.996/bin
 subtitle "make"
 make
 subtitle "install"
