@@ -58,11 +58,16 @@ subtitle "done"
 
 title "tune mecab dictionary path"
 cd $BUILD_DIR/$APP_DIR/mecab-0.996/etc/
-sed -e "s/^dicdir.*/dicdir = $BUILD_DIR\/$APP_DIR\/mecab-ipadic-2.7.0-20070801\/lib\/mecab\/dic\/ipadic/" mecabrc
+subtitle "replace dicdir"
+# 区切り文字を/にすると$変数内の/が解決できなくなるため|を利用
+sed -e "s|^dicdir.*|dicdir = $BUILD_DIR/$APP_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic|" mecabrc
 cd $HOME
 
 title "set env path"
-PROFILE_PATH = $BUILD_DIR/.profile.d/mecab.sh
-mkdir -p $(dirname $PROFILE_PATH)
+cd $BUILD_DIR
+PROFILE_DIR = ".profile.d"
+mkdir -p $PROFILE_DIR
+PROFILE_PATH = $BUILD_DIR/$PROFILE_DIR/mecab.sh
+#mkdir -p $(dirname $PROFILE_PATH)
 echo 'export PATH="$PATH:$BUILD_DIR/$APP_DIR/mecab-0.996/bin"'>> $PROFILE_PATH
 echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$BUILD_DIR/$APP_DIR/mecab-0.996/lib"'>> $PROFILE_PATH
