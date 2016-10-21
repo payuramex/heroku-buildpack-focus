@@ -73,6 +73,12 @@ mkdir -p $PROFILE_DIR
 echo 'export PATH="$PATH:/app/lib/mecab-0.996/bin"'>> $BUILD_DIR/$PROFILE_DIR/$PROFILE_PATH/mecab.sh
 echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/lib/mecab-0.996/lib"'>> $BUILD_DIR/$PROFILE_DIR/$PROFILE_PATH/mecab.sh
 
+subtitle "------------"
+ls -la /app/lib/mecab-0.996/bin
+subtitle "------------"
+ls -la /app/lib/mecab-ipadic-2.7.0-20070801
+
+
 #title "confirm mecab.sh"
 #cat $BUILD_DIR/$PROFILE_DIR/$PROFILE_PATH/mecab.sh
 #echo "------------------------"
