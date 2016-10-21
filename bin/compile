@@ -48,7 +48,7 @@ cd
 tar zxf $CACHE_DIR/$VENDOR_DIR/mecab-ipadic-2.7.0-20070801.tar.gz
 subtitle "configure"
 cd ./mecab-ipadic-2.7.0-20070801
-./configure --prefix=$BUILD_DIR/$APP_DIR/mecab-ipadic-2.7.0-20070801 --with-charset=utf8 --with-dicdir=$BUILD_DIR/$APP_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic --with-mecab-config=$BUILD_DIR/$APP_DIR/mecab-0.996/bin
+./configure --prefix=$BUILD_DIR/$APP_DIR/mecab-ipadic-2.7.0-20070801 --with-charset=utf8 --with-dicdir=$BUILD_DIR/$APP_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic --with-mecab-config=$BUILD_DIR/$APP_DIR/mecab-0.996/bin/mecab-config
 subtitle "make"
 make
 subtitle "install"
