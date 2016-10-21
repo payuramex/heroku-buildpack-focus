@@ -2,55 +2,47 @@
 
 # ユーティリティ タイトル表示
 title() {
-    echo "---> $*"
+    echo "-----> $*"
 }
 
 # ユーティリティ サブタイトル表示
 subtitle() {
-    echo "     $*"
+    echo "       $*"
 }
-
-# globの拡張
-# rmコマンドなどで「●●以外」という指定が可能になる
-shopt -s extglob
-
-# ここで何かをやってるが
-# 何をしているかわからない
-
-# ユーティリティ ディープコピー
-deep-cp() {
-  declare source="$1" target="$2"
-
-  mkdir -p "$target"
-
-  # cp doesn't like being called without source params,
-  # so make sure they expand to something first.
-  # subshell to avoid surprising caller with shopts.
-  (
-    shopt -s nullglob dotglob
-    set -- "$source"/!(tmp|.|..)
-    [[ $# == 0 ]] || cp -a "$@" "$target"
-  )
-}
-
-# ユーティリティ ディープムーブ
-deep-mv() {
-  deep-cp "$1" "$2"
-  deep-rm "$1"
-}
-
-# ユーティリティ ディープデリート
-deep-rm() {
-  # subshell to avoid surprising caller with shopts.
-  (
-    shopt -s dotglob
-    rm -rf "$1"/!(tmp|.|..)
-  )
-}
-
-# ここから本番？
 
 BUILD_DIR=$1
-CACHE_DIT=$2
+APP_DIR="app"
 
-APP_DIR="/app"
+CACHE_DIR=$2
+VENDOR_DIR="vendor/lib"
+
+title("initlialize")
+cd $BUILD_DIR
+mkdir -p $VENDOR_DIR
+
+title("build mecab")
+cp -pr $HOME/lib/mecab-0.996 $CACHE_DIR/$VENDOR_DIR/
+cd $CACHE_DIR/$VENDOR_DIR/mecab-0.996
+./configure --prefix=$BUILD_DIR/$APP_DIR/mecab-0.996 --sysconfdir=$BUILD_DIR/$APP_DIR/mecab-0.996/etc
+make
+make install
+cd $HOME
+
+title("build ipadic")
+cp -pr lib/mecab-ipadic-2.7.0-20070801 $CACHE_DIR/.heroku/vendor/lib/
+cd $CACHE_DIR/$VENDOR_DIR/mecab-ipadic-2.7.0-20070801
+./configure --prefix=$BUILD_DIR/$APP_DIR/mecab-ipadic-2.7.0-20070801 --with-charset=utf8 --with-dicdir=$BUILD_DIR/$APP_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic
+make
+make install
+cd $HOME
+
+title("tune mecab dictionary path")
+cd $BUILD_DIR/$APP_DIR/mecab-0.996/etc/
+sed -e "s/^dicdir.*/dicdir = $BUILD_DIR\/$APP_DIR\/mecab-ipadic-2.7.0-20070801\/lib\/mecab\/dic\/ipadic/" mecabrc
+cd $HOME
+
+title("set env path")
+PROFILE_PATH = $BUILD_DIR/.profile.d/mecab.sh
+mkdir -p $(dirname $PROFILE_PATH)
+echo 'export PATH="$PATH:$BUILD_DIR/$APP_DIR/mecab-0.996/bin"'>> $PROFILE_PATH
+echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$BUILD_DIR/$APP_DIR/mecab-0.996/lib"'>> $PROFILE_PATH

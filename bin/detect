@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "mecab-0.996"
+exit 0
