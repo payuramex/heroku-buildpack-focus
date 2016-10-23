@@ -30,7 +30,7 @@ echo "--------------------"
 
 
 BUILD_DIR=$1
-APP_DIR="app"
+APP_DIR=$BUILD_DIR/lib
 LIB_DIR="lib"
 
 CACHE_DIR=$2
@@ -41,10 +41,8 @@ subtitle "make CACHE_DIR/VENDOR_DIR"
 mkdir -p $CACHE_DIR
 cd $CACHE_DIR
 mkdir -p $VENDOR_DIR
-subtitle "make BUILD_DIR"
-mkdir -p $BUILD_DIR
-subtitle "make /APP_DIR/LIB_DIR"
-mkdir -p /$APP_DIR/$LIB_DIR
+subtitle "make /BUILD_DIR/LIB_DIR"
+#mkdir -p /$BUILD_DIR/$LIB_DIR
 
 # mecabのインストール
 title "build mecab"
@@ -56,7 +54,7 @@ tar zxf mecab-0.996.tar.gz
 subtitle "configure"
 cd ./mecab-0.996
 #./configure
-./configure --prefix=/$APP_DIR/$LIB_DIR/mecab-0.996 --sysconfdir=/$APP_DIR/$LIB_DIR/mecab-0.996/etc
+./configure --prefix=/$APP_DIR/mecab-0.996 --sysconfdir=/$APP_DIR/mecab-0.996/etc
 subtitle "make"
 make -s
 subtitle "install"
@@ -74,7 +72,7 @@ tar zxf mecab-ipadic-2.7.0-20070801.tar.gz
 subtitle "configure"
 cd ./mecab-ipadic-2.7.0-20070801
 #./configure
-./configure --prefix=/$APP_DIR/$LIB_DIR/mecab-ipadic-2.7.0-20070801 --with-charset=utf8 --with-dicdir=/$APP_DIR/$LIB_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic --with-mecab-config=/$APP_DIR/$LIB_DIR/mecab-0.996/bin/mecab-config
+./configure --prefix=/$APP_DIR/mecab-ipadic-2.7.0-20070801 --with-charset=utf8 --with-dicdir=/$APP_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic --with-mecab-config=/$APP_DIR/mecab-0.996/bin/mecab-config
 subtitle "make"
 make -s
 subtitle "install"
@@ -83,10 +81,10 @@ cd ../../
 subtitle "done"
 
 title "tune mecab dictionary path"
-cd /$APP_DIR/$LIB_DIR/mecab-0.996/etc/
+cd /$APP_DIR/mecab-0.996/etc/
 subtitle "replace dicdir"
 # 区切り文字を/にすると$変数内の/が解決できなくなるため|を利用
-sed -e "s|^dicdir.*|dicdir = /$APP_DIR/$LIB_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic|" mecabrc
+sed -e "s|^dicdir.*|dicdir = /$APP_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic|" mecabrc
 cd $HOME
 
 subtitle "------------"
@@ -95,10 +93,6 @@ subtitle "------------"
 ls -la /app/lib/mecab-ipadic-2.7.0-20070801
 
 title "set env path"
-cd $BUILD_DIR
 PROFILE_DIR=".profile.d"
-mkdir -p $PROFILE_DIR
-#PROFILE_PATH = $BUILD_DIR/$PROFILE_DIR/mecab.sh
-#mkdir -p $(dirname $PROFILE_PATH)
 echo 'export PATH="$PATH:/app/lib/mecab-0.996/bin"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
 echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/lib/mecab-0.996/lib"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
