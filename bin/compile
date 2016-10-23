@@ -29,8 +29,8 @@ echo "--------------------"
 #exit 0
 
 
-BUILD_DIR=$1
-APP_DIR=$BUILD_DIR/lib
+BUILD_DIR=$1 # 引数は$HOMEじゃない、なにやってんだ
+APP_DIR=$HOME/lib
 LIB_DIR="lib"
 
 echo "--------------------　BUILD_DIR/lib"
@@ -38,7 +38,7 @@ cd $APP_DIR
 pwd
 ls -la
 echo "--------------------"
-exit 0
+#exit 0
 
 CACHE_DIR=$2
 VENDOR_DIR="vendor/lib"
