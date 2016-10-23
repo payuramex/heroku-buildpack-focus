@@ -48,8 +48,8 @@ cd $CACHE_DIR/$VENDOR_DIR/
 tar zxf mecab-0.996.tar.gz
 subtitle "configure"
 cd ./mecab-0.996
-./configure
-#./configure --prefix=/$APP_DIR/$LIB_DIR/mecab-0.996 --sysconfdir=/$APP_DIR/$LIB_DIR/mecab-0.996/etc
+#./configure
+./configure --prefix=/$APP_DIR/$LIB_DIR/mecab-0.996 --sysconfdir=/$APP_DIR/$LIB_DIR/mecab-0.996/etc
 subtitle "make"
 make -s
 subtitle "install"
