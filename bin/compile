@@ -21,7 +21,7 @@ echo "-------------------- $HOME"
 cd $HOME
 pwd
 ls -la
-echo "--------------------"
+echo "--------------------　BUILD_DIR"
 cd $BUILD_DIR
 pwd
 ls -la
