@@ -32,13 +32,18 @@ echo "--------------------"
 BUILD_DIR=$1 # 引数は$HOMEじゃない、なにやってんだ
 APP_DIR=$HOME/lib
 LIB_DIR="lib"
+INSTALL_DIR=$BUILD_DIR/vendor
 
-echo "--------------------　BUILD_DIR/lib"
-cd $BUILD_DIR
-pwd
-ls -la
-echo "--------------------"
+#echo "--------------------　BUILD_DIR/lib"
+#cd $BUILD_DIR
+#pwd
+#ls -la
+#echo "--------------------"
 #exit 0
+
+cd $2
+pwd 
+exit 0
 
 CACHE_DIR=$2
 VENDOR_DIR="vendor/lib"
