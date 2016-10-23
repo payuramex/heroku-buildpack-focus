@@ -14,16 +14,16 @@ echo "-------------------- current"
 pwd
 ls -la
 echo "-------------------- /"
-pwd
 cd /
+pwd
 ls -la
 echo "-------------------- $HOME"
-pwd
 cd $HOME
+pwd
 ls -la
 echo "--------------------"
-pwd
 cd $BUILD_DIR
+pwd
 ls -la
 echo "--------------------"
 #exit 0
