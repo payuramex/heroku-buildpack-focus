@@ -34,7 +34,7 @@ APP_DIR=$HOME/lib
 LIB_DIR="lib"
 
 echo "--------------------　BUILD_DIR/lib"
-cd $APP_DIR
+cd $BUILD_DIR
 pwd
 ls -la
 echo "--------------------"
