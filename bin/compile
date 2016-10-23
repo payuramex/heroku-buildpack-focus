@@ -34,8 +34,10 @@ APP_DIR=$HOME/lib
 LIB_DIR="lib"
 INSTALL_DIR=$BUILD_DIR/vendor
 
+echo "--------------------　BUILD_DIR/"
 cd $BUILD_DIR
 pwd
+ls
 exit 0
 
 #echo "--------------------　BUILD_DIR/lib"
