@@ -42,7 +42,7 @@ mkdir -p $CACHE_DIR
 cd $CACHE_DIR
 mkdir -p $VENDOR_DIR
 subtitle "make /BUILD_DIR/LIB_DIR"
-#mkdir -p /$BUILD_DIR/$LIB_DIR
+mkdir -p $APP_DIR
 
 # mecabのインストール
 title "build mecab"
