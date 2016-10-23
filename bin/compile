@@ -29,13 +29,14 @@ subtitle() {
 #exit 0
 
 
-BUILD_DIR=$1 #
+BUILD_DIR=$1 # /app/tmp/buildpacks/
 APP_DIR=$HOME/lib
 LIB_DIR="lib"
 INSTALL_DIR=$BUILD_DIR/vendor
 
 cd $BUILD_DIR
-pwdexit 0
+pwd
+exit 0
 
 #echo "--------------------　BUILD_DIR/lib"
 #cd $BUILD_DIR
