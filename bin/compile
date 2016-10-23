@@ -10,29 +10,32 @@ subtitle() {
     echo "       $*"
 }
 
-echo "-------------------- current"
-pwd
-ls -la
-echo "-------------------- /"
-cd /
-pwd
-ls -la
-echo "-------------------- $HOME"
-cd $HOME
-pwd
-ls -la
-echo "--------------------　BUILD_DIR"
-cd $BUILD_DIR
-pwd
-ls -la
-echo "--------------------"
+#echo "-------------------- current"
+#pwd
+#ls -la
+#echo "-------------------- /"
+#cd /
+#pwd
+#ls -la
+#echo "-------------------- $HOME"
+#cd $HOME
+#pwd
+#ls -la
+#echo "--------------------　BUILD_DIR"
+#cd $BUILD_DIR
+#pwd
+#ls -la
+#echo "--------------------"
 #exit 0
 
 
-BUILD_DIR=$1 # 引数は$HOMEじゃない、なにやってんだ
+BUILD_DIR=$1 #
 APP_DIR=$HOME/lib
 LIB_DIR="lib"
 INSTALL_DIR=$BUILD_DIR/vendor
+
+cd $BUILD_DIR
+pwdexit 0
 
 #echo "--------------------　BUILD_DIR/lib"
 #cd $BUILD_DIR
@@ -45,7 +48,7 @@ cd $2
 pwd 
 exit 0
 
-CACHE_DIR=$2
+CACHE_DIR=$2 #/app/tmp/cache
 VENDOR_DIR="vendor/lib"
 
 title "initlialize"
