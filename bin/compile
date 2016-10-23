@@ -10,16 +10,23 @@ subtitle() {
     echo "       $*"
 }
 
+echo "-------------------- current"
 pwd
 ls -la
 echo "-------------------- /"
+pwd
 cd /
 ls -la
 echo "-------------------- $HOME"
+pwd
 cd $HOME
 ls -la
 echo "--------------------"
-#exit 0
+pwd
+cd $BUILD_DIR
+ls -la
+echo "--------------------"
+exit 0
 
 
 BUILD_DIR=$1
