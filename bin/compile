@@ -26,7 +26,7 @@ pwd
 cd $BUILD_DIR
 ls -la
 echo "--------------------"
-exit 0
+#exit 0
 
 
 BUILD_DIR=$1
@@ -100,5 +100,5 @@ PROFILE_DIR=".profile.d"
 mkdir -p $PROFILE_DIR
 #PROFILE_PATH = $BUILD_DIR/$PROFILE_DIR/mecab.sh
 #mkdir -p $(dirname $PROFILE_PATH)
-echo 'export PATH="$PATH:/app/lib/mecab-0.996/bin"'>> $BUILD_DIR/$PROFILE_DIR/$PROFILE_PATH/mecab.sh
-echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/lib/mecab-0.996/lib"'>> $BUILD_DIR/$PROFILE_DIR/$PROFILE_PATH/mecab.sh
+echo 'export PATH="$PATH:/app/lib/mecab-0.996/bin"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
+echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/lib/mecab-0.996/lib"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
