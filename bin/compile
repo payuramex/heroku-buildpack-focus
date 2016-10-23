@@ -19,7 +19,7 @@ echo "-------------------- $HOME"
 cd $HOME
 ls -la
 echo "--------------------"
-exit 0
+#exit 0
 
 
 BUILD_DIR=$1
@@ -48,7 +48,8 @@ cd $CACHE_DIR/$VENDOR_DIR/
 tar zxf mecab-0.996.tar.gz
 subtitle "configure"
 cd ./mecab-0.996
-./configure --prefix=/$APP_DIR/$LIB_DIR/mecab-0.996 --sysconfdir=/$APP_DIR/$LIB_DIR/mecab-0.996/etc
+./configure
+#./configure --prefix=/$APP_DIR/$LIB_DIR/mecab-0.996 --sysconfdir=/$APP_DIR/$LIB_DIR/mecab-0.996/etc
 subtitle "make"
 make -s
 subtitle "install"
@@ -65,6 +66,7 @@ cd $CACHE_DIR/$VENDOR_DIR/
 tar zxf mecab-ipadic-2.7.0-20070801.tar.gz
 subtitle "configure"
 cd ./mecab-ipadic-2.7.0-20070801
+#./configure
 ./configure --prefix=/$APP_DIR/$LIB_DIR/mecab-ipadic-2.7.0-20070801 --with-charset=utf8 --with-dicdir=/$APP_DIR/$LIB_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic --with-mecab-config=/$APP_DIR/$LIB_DIR/mecab-0.996/bin/mecab-config
 subtitle "make"
 make -s
