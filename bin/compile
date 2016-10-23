@@ -33,6 +33,13 @@ BUILD_DIR=$1
 APP_DIR=$BUILD_DIR/lib
 LIB_DIR="lib"
 
+echo "--------------------　BUILD_DIR/lib"
+cd $APP_DIR
+pwd
+ls -la
+echo "--------------------"
+exit 0
+
 CACHE_DIR=$2
 VENDOR_DIR="vendor/lib"
 
