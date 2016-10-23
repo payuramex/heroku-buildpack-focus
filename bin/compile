@@ -12,7 +12,14 @@ subtitle() {
 
 pwd
 ls -la
-#exit 0
+echo "-------------------- /"
+cd /
+ls -la
+echo "-------------------- $HOME"
+cd $HOME
+ls -la
+echo "--------------------"
+exit 0
 
 
 BUILD_DIR=$1
