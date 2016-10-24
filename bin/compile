@@ -31,7 +31,7 @@ exit 0
 
 title "initlialize"
 BUILD_DIR=$1 # /tmp/build_#HASH#
-INSTALL_DIR=$HOME/.vendor
+INSTALL_DIR=$HOME/.heroku
 
 CACHE_DIR=$2 #/app/tmp/cache
 
