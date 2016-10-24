@@ -17,16 +17,16 @@ subtitle() {
 #cd /
 #pwd
 #ls -la
-#echo "-------------------- $HOME"
-#cd $HOME
-#pwd
-#ls -la
+echo "-------------------- $HOME"
+cd $HOME
+pwd
+ls -la
 #echo "--------------------　BUILD_DIR"
 #cd $BUILD_DIR
 #pwd
 #ls -la
 #echo "--------------------"
-#exit 0
+exit 0
 
 
 title "initlialize"
