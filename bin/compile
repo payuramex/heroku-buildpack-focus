@@ -85,5 +85,5 @@ sed -e "s|^dicdir.*|dicdir = $INSTALL_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/
 
 title "set env path"
 PROFILE_DIR=".profile.d"
-echo 'export PATH="$PATH:$INSTALL_DIR/mecab-0.996/bin"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
-echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$INSTALL_DIR/mecab-0.996/lib"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
+echo 'export PATH="$PATH:$INSTALL_DIR/mecab-0.996/bin"'>> $HOME/$PROFILE_DIR/mecab.sh
+echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$INSTALL_DIR/mecab-0.996/lib"'>> $HOME/$PROFILE_DIR/mecab.sh
