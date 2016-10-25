@@ -27,6 +27,8 @@ ls -la
 #ls -la
 #echo "--------------------"
 #exit 0
+tree
+exit 0
 
 
 title "initlialize"
