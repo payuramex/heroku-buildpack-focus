@@ -69,7 +69,7 @@ subtitle "install"
 subtitle "done"
 
 subtitle "----------------"
-cd $INSTALL_DIR
+cd $INSTALL_DIR/mecab-0.966/bin
 ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 subtitle "----------------"
 #exit 0
