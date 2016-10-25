@@ -62,7 +62,7 @@ subtitle "----------------"
 cd $INSTALL_DIR
 ls -la
 subtitle "----------------"
-exit 0
+#exit 0
 
 # ipadicのインストール
 title "build ipadic"
