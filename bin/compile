@@ -32,12 +32,8 @@ ls -la
 title "initlialize"
 BUILD_DIR=$1 # /tmp/build_#HASH#
 INSTALL_DIR=$HOME/.heroku
-
-CACHE_DIR=$2 #/app/tmp/cache
-
-subtitle "make INSTALL_DIR"
 mkdir -p $INSTALL_DIR
-
+CACHE_DIR=$2 #/app/tmp/cache
 
 # mecabのインストール
 title "build mecab"
