@@ -28,7 +28,7 @@ ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's
 #echo "--------------------"
 #exit 0
 #tree
-exit 0
+#exit 0
 
 
 title "initlialize"
