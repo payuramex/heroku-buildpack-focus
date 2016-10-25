@@ -69,7 +69,7 @@ make install
 subtitle "done"
 
 subtitle "----------------"
-cd $INSTALL_DIR/mecab-0.966/bin
+cd $INSTALL_DIR/
 pwd
 ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 subtitle "----------------"
