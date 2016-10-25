@@ -70,7 +70,7 @@ subtitle "done"
 
 subtitle "----------------"
 cd $INSTALL_DIR
-ls -la
+ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 subtitle "----------------"
 #exit 0
 
