@@ -56,6 +56,12 @@ subtitle "install"
 #cp -pr 頑張る → /app
 subtitle "done"
 
+subtitle "----------------"
+cd $INSTALL_DIR
+ls -la
+subtitle "----------------"
+exit 0
+
 # ipadicのインストール
 title "build ipadic"
 subtitle "get tarball"
@@ -65,7 +71,7 @@ cd $CACHE_DIR/
 tar zxf mecab-ipadic-2.7.0-20070801.tar.gz
 subtitle "configure"
 cd ./mecab-ipadic-2.7.0-20070801
-#./configure
+#./configure 
 ./configure --silent --prefix=$INSTALL_DIR/mecab-ipadic-2.7.0-20070801 --with-charset=utf8 --with-dicdir=$INSTALL_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic --with-mecab-config=$INSTALL_DIR/mecab-0.996/bin/mecab-config
 subtitle "make"
 make --silent
