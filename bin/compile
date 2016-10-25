@@ -52,12 +52,11 @@ cd $CACHE_DIR/
 tar zxf mecab-0.996.tar.gz
 subtitle "configure"
 cd ./mecab-0.996
-./configure --prefix="$INSTALL_DIR/mecab-0.996" --sysconfdir="$INSTALL_DIR/mecab-0.996/etc"
+./configure --prefix=$INSTALL_DIR/mecab-0.996 --sysconfdir=$INSTALL_DIR/mecab-0.996/etc
 subtitle "make"
 make
 subtitle "install"
 make install
-#cp -pr 頑張る → /app
 subtitle "done"
 
 subtitle "----------------"
@@ -103,4 +102,7 @@ mkdir -p $BUILD_DIR/$PROFILE_DIR
 echo 'export PATH="$PATH:$HOME/.vendor/mecab-0.996/bin"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
 echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/.vendor/mecab-0.996/lib"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
 
+echo "今日はいい天気" | mecab
+
+# 箱舟する
 (cd $HOME && tar cf - .vendor) | (cd $BUILD_DIR && tar xf -)
