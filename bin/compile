@@ -60,7 +60,7 @@ mkdir -p $INSTALL_DIR/mecab-0.966/lib
 mkdir -p $INSTALL_DIR/mecab-0.966/include
 mkdir -p $INSTALL_DIR/mecab-0.966/libexec
 mkdir -p $INSTALL_DIR/mecab-0.966/share
-./configure --silent --prefix=$INSTALL_DIR/mecab-0.996 --sysconfdir=$INSTALL_DIR/mecab-0.996/etc
+./configure --silent --prefix="$INSTALL_DIR/mecab-0.996" --sysconfdir="$INSTALL_DIR/mecab-0.996/etc"
 subtitle "make"
 make --silent
 subtitle "install"
@@ -70,6 +70,7 @@ subtitle "done"
 
 subtitle "----------------"
 cd $INSTALL_DIR/mecab-0.966/bin
+pwd
 ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 subtitle "----------------"
 #exit 0
