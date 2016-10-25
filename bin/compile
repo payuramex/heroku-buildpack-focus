@@ -102,3 +102,5 @@ PROFILE_DIR=".profile.d"
 mkdir -p $BUILD_DIR/$PROFILE_DIR
 echo 'export PATH="$PATH:$HOME/.vendor/mecab-0.996/bin"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
 echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/.vendor/mecab-0.996/lib"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
+
+(cd $HOME && tar cf - .vendor) | (cd $BUILD_DIR && tar xf -)
