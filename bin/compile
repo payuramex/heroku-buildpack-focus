@@ -60,9 +60,9 @@ mkdir -p $INSTALL_DIR/mecab-0.966/lib
 mkdir -p $INSTALL_DIR/mecab-0.966/include
 mkdir -p $INSTALL_DIR/mecab-0.966/libexec
 mkdir -p $INSTALL_DIR/mecab-0.966/share
-./configure --silent --prefix="$INSTALL_DIR/mecab-0.996" --sysconfdir="$INSTALL_DIR/mecab-0.996/etc"
+./configure --prefix="$INSTALL_DIR/mecab-0.996" --sysconfdir="$INSTALL_DIR/mecab-0.996/etc"
 subtitle "make"
-make --silent
+make
 subtitle "install"
 #make install
 #cp -pr 頑張る → /app
