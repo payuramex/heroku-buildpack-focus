@@ -33,7 +33,8 @@ ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's
 
 title "initlialize"
 BUILD_DIR=$1 # /tmp/build_#HASH#
-INSTALL_DIR=$BUILD_DIR/.heroku
+#INSTALL_DIR=$BUILD_DIR/.heroku
+INSTALL_DIR=$HOME/.heroku
 mkdir -p $INSTALL_DIR
 CACHE_DIR=$2 #/app/tmp/cache
 
@@ -51,7 +52,8 @@ cd ./mecab-0.996
 subtitle "make"
 make --silent
 subtitle "install"
-make install
+#make install
+#cp -pr 頑張る → /app
 subtitle "done"
 
 # ipadicのインストール
