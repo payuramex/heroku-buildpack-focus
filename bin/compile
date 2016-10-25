@@ -31,7 +31,7 @@ ls -la
 
 title "initlialize"
 BUILD_DIR=$1 # /tmp/build_#HASH#
-INSTALL_DIR=$HOME/.heroku
+INSTALL_DIR=$BUILD_DIR/.heroku
 mkdir -p $INSTALL_DIR
 CACHE_DIR=$2 #/app/tmp/cache
 
@@ -83,5 +83,6 @@ subtitle "------------"
 
 title "set env path"
 PROFILE_DIR=".profile.d"
-echo 'export PATH="$PATH:$INSTALL_DIR/mecab-0.996/bin"'>> $HOME/$PROFILE_DIR/mecab.sh
-echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$INSTALL_DIR/mecab-0.996/lib"'>> $HOME/$PROFILE_DIR/mecab.sh
+mkdir -p $BUILD_DIR/$PROFILE_DIR
+echo 'export PATH="$PATH:$HOME/.heroku/mecab-0.996/bin"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
+echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/.heroku/mecab-0.996/lib"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
