@@ -89,11 +89,13 @@ cd $INSTALL_DIR/mecab-0.996/etc/
 # 区切り文字を/にすると$変数内の/が解決できなくなるため|を利用
 sed -e "s|^dicdir.*|dicdir = $INSTALL_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic|" mecabrc
 
-subtitle "------------"
-cd /app/.vendor/mecab-0.996/bin/
-pwd
-ls -la
-subtitle "------------"
+cat mecabrc
+
+#subtitle "------------"
+#cd /app/.vendor/mecab-0.996/bin/
+#pwd
+#ls -la
+#subtitle "------------"
 #ls -la /app/lib/mecab-ipadic-2.7.0-20070801
 
 title "set env path"
@@ -102,7 +104,7 @@ mkdir -p $BUILD_DIR/$PROFILE_DIR
 echo 'export PATH="$PATH:$HOME/.vendor/mecab-0.996/bin"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
 echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/.vendor/mecab-0.996/lib"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
 
-echo "今日はいい天気" | $INSTALL_DIR/mecab-0.996/bin/mecab --libdir=$HOME/.vendor/mecab-0.996/lib
+echo "今日はいい天気" | ($INSTALL_DIR/mecab-0.996/bin/mecab --libdir=$HOME/.vendor/mecab-0.996/lib)
 
 # 箱舟する
 (cd $HOME && tar cf - .vendor) | (cd $BUILD_DIR && tar xf -)
