@@ -20,14 +20,14 @@ subtitle() {
 echo "-------------------- $HOME"
 cd $HOME
 pwd
-ls -la
+ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 #echo "--------------------　BUILD_DIR"
 #cd $BUILD_DIR
 #pwd
 #ls -la
 #echo "--------------------"
 #exit 0
-tree
+#tree
 exit 0
 
 
