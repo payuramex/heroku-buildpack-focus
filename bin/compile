@@ -80,6 +80,7 @@ sed -e "s|^dicdir.*|dicdir = $INSTALL_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/
 
 subtitle "------------"
 cd /app/.heroku/mecab-0.996/bin/
+pwd
 ls -la
 subtitle "------------"
 #ls -la /app/lib/mecab-ipadic-2.7.0-20070801
