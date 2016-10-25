@@ -64,7 +64,7 @@ mkdir -p $INSTALL_DIR/mecab-0.966/share
 subtitle "make"
 make
 subtitle "install"
-#make install
+make install
 #cp -pr 頑張る → /app
 subtitle "done"
 
