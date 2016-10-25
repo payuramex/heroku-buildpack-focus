@@ -52,14 +52,6 @@ cd $CACHE_DIR/
 tar zxf mecab-0.996.tar.gz
 subtitle "configure"
 cd ./mecab-0.996
-#./configure
-mkdir -p $INSTALL_DIR/mecab-0.966/
-mkdir -p $INSTALL_DIR/mecab-0.966/bin
-mkdir -p $INSTALL_DIR/mecab-0.966/etc
-mkdir -p $INSTALL_DIR/mecab-0.966/lib
-mkdir -p $INSTALL_DIR/mecab-0.966/include
-mkdir -p $INSTALL_DIR/mecab-0.966/libexec
-mkdir -p $INSTALL_DIR/mecab-0.966/share
 ./configure --prefix="$INSTALL_DIR/mecab-0.996" --sysconfdir="$INSTALL_DIR/mecab-0.996/etc"
 subtitle "make"
 make
@@ -69,9 +61,10 @@ make install
 subtitle "done"
 
 subtitle "----------------"
-cd $INSTALL_DIR/
+cd $INSTALL_DIR/mecab-0.996/bin
 pwd
-ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+ls -la
+#ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 subtitle "----------------"
 #exit 0
 
