@@ -10,38 +10,11 @@ subtitle() {
     echo "       $*"
 }
 
-#echo "-------------------- current"
-#pwd
-#ls -la
-#echo "-------------------- /"
-#cd /
-#pwd
-#ls -la
-echo "-------------------- whoami"
-whoami
-echo "-------------------- $HOME"
-cd $HOME
-pwd
-#ls -la
-ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
-#echo "--------------------　BUILD_DIR"
-#cd $BUILD_DIR
-#pwd
-#ls -la
-#echo "--------------------"
-#exit 0
-#tree
-#exit 0
-
-
 title "initlialize"
 BUILD_DIR=$1 # /tmp/build_#HASH#
-#INSTALL_DIR=$BUILD_DIR/.heroku
 INSTALL_DIR=$HOME/.vendor
 mkdir -p $INSTALL_DIR
 CACHE_DIR=$2 #/app/tmp/cache
-
-
 
 # mecabのインストール
 title "build mecab"
@@ -59,14 +32,6 @@ subtitle "install"
 make install
 subtitle "done"
 
-subtitle "----------------"
-cd $INSTALL_DIR/mecab-0.996/bin
-pwd
-ls -la
-#ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
-subtitle "----------------"
-#exit 0
-
 # ipadicのインストール
 title "build ipadic"
 subtitle "get tarball"
@@ -76,7 +41,6 @@ cd $CACHE_DIR/
 tar zxf mecab-ipadic-2.7.0-20070801.tar.gz
 subtitle "configure"
 cd ./mecab-ipadic-2.7.0-20070801
-#./configure 
 ./configure --silent --prefix=$INSTALL_DIR/mecab-ipadic-2.7.0-20070801 --with-charset=utf8 --with-dicdir=$INSTALL_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic --with-mecab-config=$INSTALL_DIR/mecab-0.996/bin/mecab-config
 subtitle "make"
 make --silent
@@ -86,18 +50,7 @@ subtitle "done"
 
 title "tune mecab dictionary path"
 cd $INSTALL_DIR/mecab-0.996/etc/
-# 区切り文字を/にすると$変数内の/が解決できなくなるため|を利用
-#sed -e "s|^dicdir.*|dicdir = $INSTALL_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic|" mecabrc
 echo "dicdir = $INSTALL_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic" > mecabrc
-
-cat mecabrc
-
-#subtitle "------------"
-#cd /app/.vendor/mecab-0.996/bin/
-#pwd
-#ls -la
-#subtitle "------------"
-#ls -la /app/lib/mecab-ipadic-2.7.0-20070801
 
 title "set env path"
 PROFILE_DIR=".profile.d"
@@ -106,7 +59,5 @@ echo 'export PATH="$PATH:$HOME/.vendor/mecab-0.996/bin"'>> $BUILD_DIR/$PROFILE_D
 echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/.vendor/mecab-0.996/lib"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
 echo 'export MECABRC=$HOME/.vendor/mecab-0.996/etc/mecabrc' >> $BUILD_DIR/$PROFILE_DIR/mecab.sh
 
-#echo "今日はいい天気" | ($INSTALL_DIR/mecab-0.996/bin/mecab --libdir=$HOME/.vendor/mecab-0.996/lib)
-
-# 箱舟する
+# ビルド結果の保存
 (cd $HOME && tar cf - .vendor) | (cd $BUILD_DIR && tar xf -)
