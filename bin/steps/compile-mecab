@@ -12,7 +12,7 @@ echo $3
 # mecabのインストール
 title "build mecab"
 subtitle "get tarball and unzip"
-curl -s -L http://nethive.info/lib_dev/mecab-0.996.tar.gz | tar zx -C $CACHE_DIR/mecab-0.996
+curl -s -L http://nethive.info/lib_dev/mecab-0.996.tar.gz | tar zx -C $CACHE_DIR
 subtitle "configure"
 cd $CACHE_DIR/mecab-0.996
 ./configure --silent --prefix=$INSTALL_DIR/mecab-0.996 --sysconfdir=$INSTALL_DIR/mecab-0.996/etc
@@ -25,7 +25,7 @@ subtitle "done"
 # ipadicのインストール
 title "build ipadic"
 subtitle "get tarball and unzip"
-curl -s -L http://nethive.info/lib_dev/mecab-ipadic-2.7.0-20070801.tar.gz | tar zx -C $CACHE_DIR/mecab-ipadic-2.7.0-20070801
+curl -s -L http://nethive.info/lib_dev/mecab-ipadic-2.7.0-20070801.tar.gz | tar zx -C $CACHE_DIR
 subtitle "configure"
 cd $CACHE_DIR/mecab-ipadic-2.7.0-20070801
 ./configure --silent --prefix=$INSTALL_DIR/mecab-ipadic-2.7.0-20070801 --with-charset=utf8 --with-dicdir=$INSTALL_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic --with-mecab-config=$INSTALL_DIR/mecab-0.996/bin/mecab-config
