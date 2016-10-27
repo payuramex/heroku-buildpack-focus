@@ -27,7 +27,7 @@ BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 title "build step by step"
 
 # mecab buildpack
-. BIN_DIR/step/compile-mecab BUILD_DIR INSTALL_DIR CACHE_DIR
+. BIN_DIR/steps/compile-mecab BUILD_DIR INSTALL_DIR CACHE_DIR
 
 # ビルド結果の保存
 (cd $HOME && tar cf - .vendor) | (cd $BUILD_DIR && tar xf -)
