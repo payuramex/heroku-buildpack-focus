@@ -17,8 +17,8 @@ mecab_indent "build mecab"
 curl -s -L http://nethive.info/lib_dev/mecab-0.996.tar.gz | tar zx -C $CACHE_DIR
 cd $CACHE_DIR/mecab-0.996
 ./configure --silent --prefix=$INSTALL_DIR/mecab-0.996 --sysconfdir=$INSTALL_DIR/mecab-0.996/etc
-make --silent | indent
-make install | indent
+make --silent | indent >> $CACHE_DIR/install.log
+make install | indent >> $CACHE_DIR/install.log
 
 # Build ipadic
 mecab_indent "build ipadic"
