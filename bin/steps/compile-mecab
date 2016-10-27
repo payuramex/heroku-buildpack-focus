@@ -5,6 +5,10 @@ BUILD_DIR=$1 # /tmp/build_#HASH#
 INSTALL_DIR=$2 # /app/.vendor
 CACHE_DIR=$3 #/app/tmp/cache
 
+echo $1
+echo $2
+echo $3
+
 # mecabのインストール
 title "build mecab"
 subtitle "get tarball and unzip"
