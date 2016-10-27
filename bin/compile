@@ -8,6 +8,10 @@ title() {
     echo "-----> $*"
 }
 
+indent() {
+    sed "s/^/       /"
+}
+
 # initlialize
 title "initlialize"
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
