@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 title "initlialize"
-BUILD_DIR=$1 # /tmp/build_#HASH#
+BUILD_DIR=$1   # /tmp/build_#HASH#
 INSTALL_DIR=$2 # /app/.vendor
-CACHE_DIR=$3 #/app/tmp/cache
+CACHE_DIR=$3   #/app/tmp/cache
 
 echo $INSTALL_DIR
 exit 0
@@ -18,7 +18,7 @@ pwd
 ls -la
 ./configure --silent --prefix=$INSTALL_DIR/mecab-0.996 --sysconfdir=$INSTALL_DIR/mecab-0.996/etc
 subtitle "make"
-make　--silent
+make
 subtitle "install"
 make install
 subtitle "done"
