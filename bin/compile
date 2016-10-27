@@ -12,6 +12,8 @@ subtitle() {
 
 ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 
+ls -la ./step/
+
 title "initlialize"
 BUILD_DIR=$1 # /tmp/build_#HASH#
 INSTALL_DIR=$HOME/.vendor
