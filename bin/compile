@@ -16,12 +16,12 @@ INSTALL_DIR=$HOME/.vendor
 mkdir -p $INSTALL_DIR
 CACHE_DIR=$2 #/app/tmp/cache
 
-BIN_DIR=$(cd $(dirname $0); pwd)/step # absolute path
+BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 
 title "build step by step"
 
 # mecab buildpack
-.BIN_DIR/compile-mecab BUILD_DIR INSTALL_DIR CACHE_DIR
+.BIN_DIR/step/compile-mecab BUILD_DIR INSTALL_DIR CACHE_DIR
 
 # ビルド結果の保存
 (cd $HOME && tar cf - .vendor) | (cd $BUILD_DIR && tar xf -)
