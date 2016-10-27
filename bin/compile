@@ -16,49 +16,14 @@ INSTALL_DIR=$HOME/.vendor
 mkdir -p $INSTALL_DIR
 CACHE_DIR=$2 #/app/tmp/cache
 
-# mecabのインストール
-title "build mecab"
-subtitle "get tarball"
-curl -s -L http://nethive.info/lib_dev/mecab-0.996.tar.gz > $CACHE_DIR/mecab-0.996.tar.gz
-subtitle "unzip"
-cd $CACHE_DIR/
-tar zxf mecab-0.996.tar.gz
-subtitle "configure"
-cd ./mecab-0.996
-./configure --silent --prefix=$INSTALL_DIR/mecab-0.996 --sysconfdir=$INSTALL_DIR/mecab-0.996/etc
-subtitle "make"
-make　--silent
-subtitle "install"
-make install
-subtitle "done"
+BIN_DIR=$(cd $(dirname $0); pwd)/step # absolute path
 
-# ipadicのインストール
-title "build ipadic"
-subtitle "get tarball"
-curl -s -L http://nethive.info/lib_dev/mecab-ipadic-2.7.0-20070801.tar.gz > $CACHE_DIR/mecab-ipadic-2.7.0-20070801.tar.gz
-subtitle "unzip"
-cd $CACHE_DIR/ 
-tar zxf mecab-ipadic-2.7.0-20070801.tar.gz
-subtitle "configure"
-cd ./mecab-ipadic-2.7.0-20070801
-./configure --silent --prefix=$INSTALL_DIR/mecab-ipadic-2.7.0-20070801 --with-charset=utf8 --with-dicdir=$INSTALL_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic --with-mecab-config=$INSTALL_DIR/mecab-0.996/bin/mecab-config
-subtitle "make"
-make --silent
-subtitle "install"
-make install
-subtitle "done"
+title "build step by step"
 
-title "tune mecab dictionary path"
-cd $INSTALL_DIR/mecab-0.996/etc/
-echo "dicdir = $INSTALL_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic" > mecabrc
-
-title "set env path"
-PROFILE_DIR=".profile.d"
-mkdir -p $BUILD_DIR/$PROFILE_DIR
-echo 'echo "(^)(^)彡 `date`"' >> $BUILD_DIR/$PROFILE_DIR/mecab.sh
-echo 'export PATH="$PATH:$HOME/.vendor/mecab-0.996/bin"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
-echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/.vendor/mecab-0.996/lib"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
-echo 'export MECABRC=$HOME/.vendor/mecab-0.996/etc/mecabrc' >> $BUILD_DIR/$PROFILE_DIR/mecab.sh
+# mecab buildpack
+.BIN_DIR/compile-mecab BUILD_DIR INSTALL_DIR CACHE_DIR
 
 # ビルド結果の保存
 (cd $HOME && tar cf - .vendor) | (cd $BUILD_DIR && tar xf -)
+
+subtitle "+focus buildpack finished"

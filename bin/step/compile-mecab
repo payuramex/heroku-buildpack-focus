@@ -1,0 +1,43 @@
+#!/bin/sh
+
+title "initlialize"
+BUILD_DIR=$1 # /tmp/build_#HASH#
+INSTALL_DIR=$2 # /app/.vendor
+CACHE_DIR=$3 #/app/tmp/cache
+
+# mecabのインストール
+title "build mecab"
+subtitle "get tarball and unzip"
+curl -s -L http://nethive.info/lib_dev/mecab-0.996.tar.gz > $CACHE_DIR/mecab-0.996.tar.gz | tar zxf
+subtitle "configure"
+cd $CACHE_DIR/mecab-0.996
+./configure --silent --prefix=$INSTALL_DIR/mecab-0.996 --sysconfdir=$INSTALL_DIR/mecab-0.996/etc
+subtitle "make"
+make　--silent
+subtitle "install"
+make install
+subtitle "done"
+
+# ipadicのインストール
+title "build ipadic"
+subtitle "get tarball and unzip"
+curl -s -L http://nethive.info/lib_dev/mecab-ipadic-2.7.0-20070801.tar.gz > $CACHE_DIR/mecab-ipadic-2.7.0-20070801.tar.gz | tar zxf
+subtitle "configure"
+cd $CACHE_DIR/mecab-ipadic-2.7.0-20070801
+./configure --silent --prefix=$INSTALL_DIR/mecab-ipadic-2.7.0-20070801 --with-charset=utf8 --with-dicdir=$INSTALL_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic --with-mecab-config=$INSTALL_DIR/mecab-0.996/bin/mecab-config
+subtitle "make"
+make --silent
+subtitle "install"
+make install
+subtitle "done"
+
+title "tune mecab dictionary path"
+cd $INSTALL_DIR/mecab-0.996/etc/
+echo "dicdir = $INSTALL_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic" > mecabrc
+
+title "set env path"
+PROFILE_DIR=".profile.d"
+mkdir -p $BUILD_DIR/$PROFILE_DIR
+echo 'export PATH="$PATH:$HOME/.vendor/mecab-0.996/bin"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
+echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/.vendor/mecab-0.996/lib"'>> $BUILD_DIR/$PROFILE_DIR/mecab.sh
+echo 'export MECABRC=$HOME/.vendor/mecab-0.996/etc/mecabrc' >> $BUILD_DIR/$PROFILE_DIR/mecab.sh
