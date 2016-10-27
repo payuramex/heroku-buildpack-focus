@@ -31,7 +31,7 @@ CACHE_DIR=$2 #/app/tmp/cache
 title "build step by step"
 
 # mecab buildpack
-source $BIN_DIR/steps/compile-mecab $BUILD_DIR $INSTALL_DIR $CACHE_DIR
+. $BIN_DIR/steps/compile-mecab $BUILD_DIR $INSTALL_DIR $CACHE_DIR
 
 # ビルド結果の保存
 (cd $HOME && tar cf - .vendor) | (cd $BUILD_DIR && tar xf -)
