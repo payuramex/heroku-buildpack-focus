@@ -5,16 +5,14 @@ BUILD_DIR=$1 # /tmp/build_#HASH#
 INSTALL_DIR=$2 # /app/.vendor
 CACHE_DIR=$3 #/app/tmp/cache
 
-echo $1
-echo $2
-echo $3
-
 # mecabのインストール
 title "build mecab"
 subtitle "get tarball and unzip"
 curl -s -L http://nethive.info/lib_dev/mecab-0.996.tar.gz | tar zx -C $CACHE_DIR
 subtitle "configure"
 cd $CACHE_DIR/mecab-0.996
+pwd
+ls -la
 ./configure --silent --prefix=$INSTALL_DIR/mecab-0.996 --sysconfdir=$INSTALL_DIR/mecab-0.996/etc
 subtitle "make"
 make　--silent
