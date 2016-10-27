@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+# Syntax sugar
+tesseract_indent () {
+    echo "       [tesseract] $*"
+}
+
+# Initialize
+tesseract_indent "initlialize"
+BUILD_DIR=$1   # /tmp/build_#HASH#
+INSTALL_DIR=$2 # /app/.vendor
+CACHE_DIR=$3   # /app/tmp/cache
+PROFILE_DIR=$4 # $BUILD_DIR/.profile.d
+
+# Build leptonica
+tesseract_indent "build leptonica"
+curl -s -L http://www.leptonica.com/source/leptonica-1.71.tar.gz | tar zx -C $CACHE_DIR
+cd $CACHE_DIR/leptonica-1.71
+./configure --silent --prefix=$INSTALL_DIR/leptonica-1.71
+make --silent | indent
+make --silent install | indent
+
+# Build tesseract
+tesseract_indent "build tesseract"
+git clone --depth=1 https://github.com/tesseract-ocr/tesseract $CACHE_DIR/tesseract
+cd $CACHE_DIR/tesseract
+./autogen.sh
+LIBLEPT_HEADERSDIR=$HOME/leptonica-1.71/include ./configure --silent --prefix=$INSTALL_DIR/tesseract --with-extra-libraries=$INSTALL_DIR/leptonica-1.71/lib
+LDFLAGS="-L/usr/local/lib" CFLAGS="-I/usr/local/include" make --silent | indent
+make --silent install | indent
+
+# Build langdata
+tesseract_indent "build langdata"
+git clone git://github.com/tesseract-ocr/langdata.git $INSTALL_DIR/tesseract/work
+
+# Set .profile.d script
+mecab_indent "set env path"
+echo 'export PATH="$PATH:$HOME/.vendor/tesseract/bin"' >> $PROFILE_DIR/tesseract.sh
+echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/.vendor/tesseract/lib"' >> $PROFILE_DIR/tesseract.sh
+echo 'export TESSDATA_PREFIX=$HOME/.vendor/tesseract' >> $PROFILE_DIR/tesseract.sh
