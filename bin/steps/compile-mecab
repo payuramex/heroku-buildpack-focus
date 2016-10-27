@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 title "initlialize"
 BUILD_DIR=$1 # /tmp/build_#HASH#
