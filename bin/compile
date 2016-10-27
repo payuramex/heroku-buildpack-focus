@@ -10,6 +10,8 @@ subtitle() {
     echo "       $*"
 }
 
+ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+
 title "initlialize"
 BUILD_DIR=$1 # /tmp/build_#HASH#
 INSTALL_DIR=$HOME/.vendor
@@ -21,7 +23,7 @@ BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 title "build step by step"
 
 # mecab buildpack
-.BIN_DIR/step/compile-mecab BUILD_DIR INSTALL_DIR CACHE_DIR
+. BIN_DIR/step/compile-mecab BUILD_DIR INSTALL_DIR CACHE_DIR
 
 # ビルド結果の保存
 (cd $HOME && tar cf - .vendor) | (cd $BUILD_DIR && tar xf -)
