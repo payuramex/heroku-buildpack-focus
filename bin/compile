@@ -8,13 +8,6 @@ title() {
     echo "-----> $*"
 }
 
-# ユーティリティ サブタイトル表示
-subtitle() {
-    echo "       $*"
-}
-
-ls -la
-
 # initlialize
 title "initlialize"
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
@@ -25,10 +18,11 @@ CACHE_DIR=$2 #/app/tmp/cache
 PROFILE_DIR=$BUILD_DIR/.profile.d
 mkdir -p $PROFILE_DIR
 
+# Build buildpacks
 title "build step by step"
 . $BIN_DIR/steps/compile-mecab $BUILD_DIR $INSTALL_DIR $CACHE_DIR $PROFILE_DIR # mecab buildpack
 
 # Store buildpacks
 (cd $HOME && tar cf - .vendor) | (cd $BUILD_DIR && tar xf -)
 
-subtitle "+focus buildpack finished"
+title "+focus buildpack finished"
