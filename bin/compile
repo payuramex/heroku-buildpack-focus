@@ -10,9 +10,11 @@ subtitle() {
     echo "       $*"
 }
 
-ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+ls -la
 
-ls -la ./step/
+#ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+
+#ls -la ./step/
 
 title "initlialize"
 BUILD_DIR=$1 # /tmp/build_#HASH#
