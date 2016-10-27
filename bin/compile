@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# Fail fast and fail hard.
+# Fail fast and fail hard
 set -eo pipefail
 
-# ユーティリティ タイトル表示
+# Syntax sugar
 title() {
     echo "-----> $*"
 }
@@ -15,25 +15,20 @@ subtitle() {
 
 ls -la
 
-#ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
-
-#ls -la ./step/
-
+# initlialize
 title "initlialize"
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 BUILD_DIR=$1 # /tmp/build_#HASH#
 INSTALL_DIR=$HOME/.vendor
 mkdir -p $INSTALL_DIR
 CACHE_DIR=$2 #/app/tmp/cache
-
-
+PROFILE_DIR=$BUILD_DIR/.profile.d
+mkdir -p $PROFILE_DIR
 
 title "build step by step"
+. $BIN_DIR/steps/compile-mecab $BUILD_DIR $INSTALL_DIR $CACHE_DIR $PROFILE_DIR # mecab buildpack
 
-# mecab buildpack
-. $BIN_DIR/steps/compile-mecab $BUILD_DIR $INSTALL_DIR $CACHE_DIR
-
-# ビルド結果の保存
+# Store buildpacks
 (cd $HOME && tar cf - .vendor) | (cd $BUILD_DIR && tar xf -)
 
 subtitle "+focus buildpack finished"
