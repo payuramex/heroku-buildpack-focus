@@ -4,12 +4,16 @@
 set -eo pipefail
 
 # Syntax sugar
+title() {
+    echo "-----> $*"
+}
+
 indent() {
     sed "s/^/-----> /"
 }
 
 # initlialize
-indent "initlialize"
+title "initlialize"
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 BUILD_DIR=$1 # /tmp/build_#HASH#
 INSTALL_DIR=$HOME/.vendor
@@ -19,11 +23,11 @@ PROFILE_DIR=$BUILD_DIR/.profile.d
 mkdir -p $PROFILE_DIR
 
 # Build buildpacks
-indent "build step by step"
+title "build step by step"
 . $BIN_DIR/steps/compile-mecab     $BUILD_DIR $INSTALL_DIR $CACHE_DIR $PROFILE_DIR # mecab buildpack
 . $BIN_DIR/steps/compile-tesseract $BUILD_DIR $INSTALL_DIR $CACHE_DIR $PROFILE_DIR # tesseract buildpack
 
 # Store buildpacks
 (cd $HOME && tar cf - .vendor) | (cd $BUILD_DIR && tar xf -)
 
-indent "+focus buildpack finished"
+title "+focus buildpack finished"
