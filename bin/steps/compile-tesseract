@@ -35,6 +35,6 @@ git clone git://github.com/tesseract-ocr/langdata.git $INSTALL_DIR/tesseract/wor
 
 # Set .profile.d script
 mecab_indent "set env path"
-echo 'export PATH="$PATH:$HOME/.vendor/tesseract/bin"' >> $PROFILE_DIR/tesseract.sh
-echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/.vendor/tesseract/lib"' >> $PROFILE_DIR/tesseract.sh
-echo 'export TESSDATA_PREFIX=$HOME/.vendor/tesseract/work' >> $PROFILE_DIR/tesseract.sh
+echo 'export PATH="$PATH:$INSTALL_DIR/tesseract/bin"' >> $PROFILE_DIR/tesseract.sh
+echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$INSTALL_DIR/tesseract/lib"' >> $PROFILE_DIR/tesseract.sh
+echo 'export TESSDATA_PREFIX=$INSTALL_DIR/tesseract/work' >> $PROFILE_DIR/tesseract.sh
