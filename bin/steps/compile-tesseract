@@ -35,7 +35,7 @@ git clone git://github.com/tesseract-ocr/langdata.git $INSTALL_DIR/tesseract/wor
 ls -F $INSTALL_DIR/tesseract/work/ | egrep -v "jpn|eng" | grep "/$" | xargs rm -rf # Delete langdata other than "jpn" & "eng"
 
 # Set .profile.d script
-mecab_indent "set env path"
+tesseract_indent "set env path"
 echo 'export PATH="$PATH:$INSTALL_DIR/tesseract/bin"' >> $PROFILE_DIR/tesseract.sh
 echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$INSTALL_DIR/tesseract/lib"' >> $PROFILE_DIR/tesseract.sh
 echo 'export TESSDATA_PREFIX=$INSTALL_DIR/tesseract/work' >> $PROFILE_DIR/tesseract.sh
