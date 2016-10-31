@@ -20,28 +20,12 @@ mecab_indent "build mecab"
 tar -zxf $LIB_DIR/mecab-0.996.tar.gz -C $CACHE_DIR
 cd $CACHE_DIR/mecab-0.996
 make install --silent | indent
-#curl -s -L http://nethive.info/lib_dev/mecab-0.996.tar.gz | tar zx -C $CACHE_DIR
-#ls -la $CACHE_DIR
-#mecab_indent "-------------"
-#ls -la $CACHE_DIR/mecab-0.996/
-#cp -r $CACHE_DIR/mecab-0.996 $INSTALL_DIR/
-#ls -la $INSTALL_DIR/mecab-0.996
-#cd $CACHE_DIR/mecab-0.996
-#./configure --silent --prefix=$INSTALL_DIR/mecab-0.996 --sysconfdir=$INSTALL_DIR/mecab-0.996/etc
-#make --silent | indent
-#make --silent install | indent
 
 # Build ipadic
 mecab_indent "build ipadic"
 tar -zxf $LIB_DIR/mecab-ipadic-2.7.0-20070801.tar.gz -C $CACHE_DIR
 cd $CACHE_DIR/mecab-ipadic-2.7.0-20070801
 make install --silent | indent
-#curl -s -L http://nethive.info/lib_dev/mecab-ipadic-2.7.0-20070801.tar.gz | tar zx -C $CACHE_DIR
-#cp -r $CACHE_DIR/mecab-ipadic-2.7.0-20070801 $INSTALL_DIR/
-#cd $CACHE_DIR/mecab-ipadic-2.7.0-20070801
-#./configure --silent --prefix=$INSTALL_DIR/mecab-ipadic-2.7.0-20070801 --with-charset=utf8 --with-dicdir=$INSTALL_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic --with-mecab-config=$INSTALL_DIR/mecab-0.996/bin/mecab-config
-#make --silent | indent
-#make --silent install | indent
 
 # Change mecab dictionary path
 mecab_indent "change mecab dictionary path"
