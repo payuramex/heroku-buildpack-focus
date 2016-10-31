@@ -18,7 +18,7 @@ rm -rf $CACHE_DIR/mecab*
 # Build mecab
 mecab_indent "build mecab"
 tar -zxf $LIB_DIR/mecab-0.996.tar.gz -C $CACHE_DIR
-make install --silent | indent
+make --silent install | indent
 #curl -s -L http://nethive.info/lib_dev/mecab-0.996.tar.gz | tar zx -C $CACHE_DIR
 #ls -la $CACHE_DIR
 #mecab_indent "-------------"
@@ -33,7 +33,7 @@ make install --silent | indent
 # Build ipadic
 mecab_indent "build ipadic"
 tar -zxf $LIB_DIR/mecab-ipadic-2.7.0-20070801.tar.gz -C $CACHE_DIR
-make install --silent | indent
+make --silent install | indent
 #curl -s -L http://nethive.info/lib_dev/mecab-ipadic-2.7.0-20070801.tar.gz | tar zx -C $CACHE_DIR
 #cp -r $CACHE_DIR/mecab-ipadic-2.7.0-20070801 $INSTALL_DIR/
 #cd $CACHE_DIR/mecab-ipadic-2.7.0-20070801
