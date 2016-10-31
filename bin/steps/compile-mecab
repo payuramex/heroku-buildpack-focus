@@ -16,7 +16,7 @@ rm -rf $CACHE_DIR/mecab*
 
 # Build mecab
 mecab_indent "build mecab"
-curl -s -L http://nethive.info/lib_dev/mecab-0.996.tar.gz | tar zx -C $CACHE_DIR
+curl -s -L http://nethive.info/lib_dev/bk/mecab-0.996.tar.gz | tar zx -C $CACHE_DIR
 ls -la $CACHE_DIR
 mecab_indent "-------------"
 ls -la $CACHE_DIR/mecab-0.996/
