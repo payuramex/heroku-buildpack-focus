@@ -15,7 +15,11 @@ PROFILE_DIR=$4 # $BUILD_DIR/.profile.d
 # Build mecab
 mecab_indent "build mecab"
 curl -s -L http://nethive.info/lib_dev/mecab-0.996.tar.gz | tar zx -C $CACHE_DIR
-cp -r $CACHE_DIR/mecab-0.996 $INSTALL_DIR/mecab-0.996
+ls -la $CACHE_DIR
+mecab_indent "-------------"
+ls -la $CACHE_DIR/mecab-0.996/
+cp -r $CACHE_DIR/mecab-0.996 $INSTALL_DIR/
+ls -la $INSTALL_DIR/mecab-0.996
 #cd $CACHE_DIR/mecab-0.996
 #./configure --silent --prefix=$INSTALL_DIR/mecab-0.996 --sysconfdir=$INSTALL_DIR/mecab-0.996/etc
 #make --silent | indent
