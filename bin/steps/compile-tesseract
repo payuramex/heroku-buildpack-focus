@@ -32,10 +32,11 @@ make install --silent | indent
 
 
 # Build langdata
-#tesseract_indent "build langdata"
-#git clone git://github.com/tesseract-ocr/langdata.git $INSTALL_DIR/tesseract/work
-#ls -F $INSTALL_DIR/tesseract/work/ | egrep -v "jpn|eng" | grep "/$" | xargs rm -rf # Delete langdata other than "jpn" & "eng"
-#rm -rf $INSTALL_DIR/tesseract/work/.git # Delete .git files
+tesseract_indent "build langdata"
+git clone git://github.com/tesseract-ocr/langdata.git $INSTALL_DIR/tesseract/work
+cd $INSTALL_DIR/tesseract/work/
+ls -F | egrep -v "jpn|eng" | grep "/$" | xargs rm -rf # Delete langdata other than "jpn" & "eng"
+rm -rf $INSTALL_DIR/tesseract/work/.git # Delete .git files
 rm -rf $INSTALL_DIR/tesseract/lib/libtesseract.a
 
 # Set .profile.d script
