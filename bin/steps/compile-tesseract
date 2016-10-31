@@ -15,11 +15,14 @@ PROFILE_DIR=$5 # $BUILD_DIR/.profile.d
 
 # Build leptonica
 tesseract_indent "build leptonica"
-curl -s -L http://www.leptonica.com/source/leptonica-1.71.tar.gz | tar zx -C $CACHE_DIR
+#curl -s -L http://www.leptonica.com/source/leptonica-1.71.tar.gz | tar zx -C $CACHE_DIR
+#cd $CACHE_DIR/leptonica-1.71
+#./configure --silent --prefix=$INSTALL_DIR/leptonica-1.71
+#make --silent | indent
+#make --silent install | indent
+tar -zxf $LIB_DIR/leptonica-1.71.tar.gz -C $CACHE_DIR
 cd $CACHE_DIR/leptonica-1.71
-./configure --silent --prefix=$INSTALL_DIR/leptonica-1.71
-make --silent | indent
-make --silent install | indent
+make install --silent | indent
 
 # Build tesseract
 tesseract_indent "build tesseract"
@@ -37,6 +40,6 @@ rm -rf $INSTALL_DIR/tesseract/lib/libtesseract.a
 
 # Set .profile.d script
 tesseract_indent "set env path"
-echo 'export PATH="$PATH:$INSTALL_DIR/tesseract/bin"' >> $PROFILE_DIR/tesseract.sh
-echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$INSTALL_DIR/tesseract/lib"' >> $PROFILE_DIR/tesseract.sh
-echo 'export TESSDATA_PREFIX=$INSTALL_DIR/tesseract/work' >> $PROFILE_DIR/tesseract.sh
+echo 'export PATH="$PATH:/app/.vendor/tesseract/bin"' >> $PROFILE_DIR/tesseract.sh
+echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/.vendor/tesseract/lib"' >> $PROFILE_DIR/tesseract.sh
+echo 'export TESSDATA_PREFIX=/app/.vendor/tesseract/work' >> $PROFILE_DIR/tesseract.sh
