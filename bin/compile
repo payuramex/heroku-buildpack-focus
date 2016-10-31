@@ -17,11 +17,11 @@ main_indent "initlialize"
 BIN_DIR=$(cd $(dirname $0); pwd)  # absolute path
 BUILD_DIR=$1                      # /tmp/build_#HASH#
 INSTALL_DIR=$HOME/.vendor         # /app/.vendor
-CACHE_DIR=$2                      #/app/tmp/cache
+CACHE_DIR=$2                      # /app/tmp/cache
 PROFILE_DIR=$BUILD_DIR/.profile.d # $BUILD_DIR/.profile.d
 mkdir -p $INSTALL_DIR
 mkdir -p $PROFILE_DIR
-
+ 
 # Build buildpacks
 main_indent "build step by step"
 . $BIN_DIR/steps/compile-mecab     $BUILD_DIR $INSTALL_DIR $CACHE_DIR $PROFILE_DIR # mecab buildpack
