@@ -25,7 +25,7 @@ mkdir -p $PROFILE_DIR
 # Build buildpacks
 main_indent "build step by step"
 . $BIN_DIR/steps/compile-mecab     $BUILD_DIR $INSTALL_DIR $CACHE_DIR $PROFILE_DIR # mecab buildpack
-. $BIN_DIR/steps/compile-tesseract $BUILD_DIR $INSTALL_DIR $CACHE_DIR $PROFILE_DIR # tesseract buildpack
+#. $BIN_DIR/steps/compile-tesseract $BUILD_DIR $INSTALL_DIR $CACHE_DIR $PROFILE_DIR # tesseract buildpack
 
 # Store buildpacks
 (cd $HOME && tar cf - .vendor) | (cd $BUILD_DIR && tar xf -)
