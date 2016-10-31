@@ -12,6 +12,8 @@ INSTALL_DIR=$2 # /app/.vendor
 CACHE_DIR=$3   # /app/tmp/cache
 PROFILE_DIR=$4 # $BUILD_DIR/.profile.d
 
+rm -rf $CACHE_DIR/mecab*
+
 # Build mecab
 mecab_indent "build mecab"
 curl -s -L http://nethive.info/lib_dev/mecab-0.996.tar.gz | tar zx -C $CACHE_DIR
