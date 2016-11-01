@@ -33,14 +33,15 @@ make install --silent | indent
 
 # Build langdata
 tesseract_indent "build langdata"
-git clone git://github.com/tesseract-ocr/langdata.git $INSTALL_DIR/tesseract/work
-cd $INSTALL_DIR/tesseract/work/
-ls -F | egrep -v "jpn|eng" | grep "/$" | xargs rm -rf # Delete langdata other than "jpn" & "eng"
-rm -rf $INSTALL_DIR/tesseract/work/.git # Delete .git files
-rm -rf $INSTALL_DIR/tesseract/lib/libtesseract.a
+#git clone git://github.com/tesseract-ocr/langdata.git $INSTALL_DIR/tesseract/work
+#cd $INSTALL_DIR/tesseract/work/
+#ls -F | egrep -v "jpn|eng" | grep "/$" | xargs rm -rf # Delete langdata other than "jpn" & "eng"
+#rm -rf $INSTALL_DIR/tesseract/work/.git # Delete .git files
+#rm -rf $INSTALL_DIR/tesseract/lib/libtesseract.a
+tar -zxf $LIB_DIR/tessdata.tar.gz -C $INSTALL_DIR/tesseract/
 
 # Set .profile.d script
 tesseract_indent "set env path"
 echo 'export PATH="$PATH:/app/.vendor/tesseract/bin"' >> $PROFILE_DIR/tesseract.sh
 echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/.vendor/tesseract/lib"' >> $PROFILE_DIR/tesseract.sh
-echo 'export TESSDATA_PREFIX=/app/.vendor/tesseract/work' >> $PROFILE_DIR/tesseract.sh
+echo 'export TESSDATA_PREFIX=/app/.vendor/tesseract/' >> $PROFILE_DIR/tesseract.sh
