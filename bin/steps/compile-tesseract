@@ -13,6 +13,8 @@ INSTALL_DIR=$3 # /app/.vendor
 CACHE_DIR=$4   # /app/tmp/cache
 PROFILE_DIR=$5 # $BUILD_DIR/.profile.d
 
+rm -rf $CACHE_DIR/tesseract
+
 # Build leptonica
 tesseract_indent "build leptonica"
 curl -s -L http://www.leptonica.com/source/leptonica-1.71.tar.gz | tar zx -C $CACHE_DIR
