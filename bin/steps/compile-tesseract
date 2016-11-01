@@ -23,6 +23,7 @@ tesseract_indent "build leptonica"
 tar -zxf $LIB_DIR/leptonica-1.71.tar.gz -C $CACHE_DIR
 cd $CACHE_DIR/leptonica-1.71
 make install --silent | indent
+ldconfig
 
 # Build tesseract
 tesseract_indent "build tesseract"
@@ -30,6 +31,7 @@ curl -s -L http://nethive.info/lib_dev/tesseract.tar.gz | tar zx -C $CACHE_DIR
 cd $CACHE_DIR/tesseract
 make install --silent | indent
 rm -rf $INSTALL_DIR/tesseract/lib/libtesseract.a
+ldconfig
 
 # Build langdata
 tesseract_indent "build langdata"
