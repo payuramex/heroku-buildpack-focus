@@ -184,10 +184,11 @@ Dict::~Dict() {
 }
 
 DawgCache *Dict::GlobalDawgCache() {
-  // This global cache (a singleton) will outlive every Tesseract instance
-  // (even those that someone else might declare as global statics).
-  static DawgCache cache;
-  return &cache;
+  // We dynamically allocate this global cache (a singleton) so it will outlive
+  // every Tesseract instance (even those that someone else might declare as
+  // global statics).
+  static DawgCache *cache = new DawgCache();  // evil global singleton
+  return cache;
 }
 
 void Dict::Load(DawgCache *dawg_cache) {
@@ -477,8 +478,7 @@ int Dict::def_letter_is_okay(void* void_dawg_args,
     dawg_args->permuter = curr_perm;
   }
   if (dawg_debug_level >= 2) {
-    tprintf("Returning %d for permuter code for this character.\n",
-            dawg_args->permuter);
+    tprintf("Returning %d for permuter code for this character.\n");
   }
   return dawg_args->permuter;
 }

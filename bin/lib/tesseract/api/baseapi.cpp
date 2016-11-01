@@ -809,10 +809,6 @@ int CubeAPITest(Boxa* boxa_blocks, Pixa* pixa_blocks,
  * has not been subjected to a call of Init, SetImage, Recognize, Clear, End
  * DetectOS, or anything else that changes the internal PAGE_RES.
  */
-PageIterator* TessBaseAPI::AnalyseLayout() {
-  return AnalyseLayout(false);
-}
-
 PageIterator* TessBaseAPI::AnalyseLayout(bool merge_similar_words) {
   if (FindLines() == 0) {
     if (block_list_->empty())
@@ -854,9 +850,6 @@ int TessBaseAPI::Recognize(ETEXT_DESC* monitor) {
     // TODO(rays) LSTM here.
     page_res_ = new PAGE_RES(false,
                              block_list_, &tesseract_->prev_word_best_choice_);
-  }
-  if (page_res_ == NULL) {
-    return -1;
   }
   if (tesseract_->tessedit_make_boxes_from_boxes) {
     tesseract_->CorrectClassifyWords(page_res_);
@@ -1047,14 +1040,11 @@ bool TessBaseAPI::ProcessPagesMultipageTiff(const l_uint8 *data,
       page = tessedit_page_number;
 #ifdef USE_OPENCL
     if ( od.selectedDeviceIsOpenCL() ) {
-      pix = (data) ?
-          od.pixReadMemTiffCl(data, size, page) :
-          od.pixReadTiffCl(filename, page);
+      // FIXME(jbreiden) Not implemented.
+      pix = od.pixReadMemTiffCl(data, size, page);
     } else {
 #endif  // USE_OPENCL
-      pix = (data) ?
-          pixReadMemTiff(data, size, page) :
-          pixReadTiff(filename, page);
+      pix = pixReadMemTiff(data, size, page);
 #ifdef USE_OPENCL
     }
 #endif  // USE_OPENCL
@@ -1102,7 +1092,8 @@ bool TessBaseAPI::ProcessPages(const char* filename, const char* retry_config,
 // makes automatic detection of datatype (TIFF? filelist? PNG?)
 // impractical.  So we support a command line flag to explicitly
 // identify the scenario that really matters: filelists on
-// stdin. We'll still do our best if the user likes pipes.
+// stdin. We'll still do our best if the user likes pipes.  That means
+// piling up any data coming into stdin into a memory buffer.
 bool TessBaseAPI::ProcessPagesInternal(const char* filename,
                                        const char* retry_config,
                                        int timeout_millisec,
@@ -1124,24 +1115,31 @@ bool TessBaseAPI::ProcessPagesInternal(const char* filename,
   }
 
   // At this point we are officially in autodection territory.
-  // That means any data in stdin must be buffered, to make it
-  // seekable.
+  // That means we are going to buffer stdin so that it is
+  // seekable. To keep code simple we will also buffer data
+  // coming from a file.
   std::string buf;
-  const l_uint8 *data = NULL;
   if (stdInput) {
     buf.assign((std::istreambuf_iterator<char>(std::cin)),
                (std::istreambuf_iterator<char>()));
-    data = reinterpret_cast<const l_uint8 *>(buf.data());
+  } else {
+    std::ifstream ifs(filename, std::ios::binary);
+    if (ifs) {
+      buf.assign((std::istreambuf_iterator<char>(ifs)),
+                 (std::istreambuf_iterator<char>()));
+    } else {
+      tprintf("ERROR: Can not open input file %s\n", filename);
+      return false;
+    }
   }
 
   // Here is our autodetection
   int format;
-  int r = (stdInput) ?
-      findFileFormatBuffer(data, &format) :
-      findFileFormat(filename, &format);
+  const l_uint8 * data = reinterpret_cast<const l_uint8 *>(buf.c_str());
+  findFileFormatBuffer(data, &format);
 
   // Maybe we have a filelist
-  if (r != 0 || format == IFF_UNKNOWN) {
+  if (format == IFF_UNKNOWN) {
     STRING s(buf.c_str());
     return ProcessPagesFileList(NULL, &s, retry_config,
                                 timeout_millisec, renderer,
@@ -1157,7 +1155,7 @@ bool TessBaseAPI::ProcessPagesInternal(const char* filename,
   // Fail early if we can, before producing any output
   Pix *pix = NULL;
   if (!tiff) {
-    pix = (stdInput) ? pixReadMem(data, buf.size()) : pixRead(filename);
+    pix = pixReadMem(data, buf.size());
     if (pix == NULL) {
       return false;
     }
@@ -1171,15 +1169,16 @@ bool TessBaseAPI::ProcessPagesInternal(const char* filename,
   }
 
   // Produce output
-  r = (tiff) ?
-      ProcessPagesMultipageTiff(data, buf.size(), filename, retry_config,
-                                timeout_millisec, renderer,
-                                tesseract_->tessedit_page_number) :
-      ProcessPage(pix, 0, filename, retry_config,
-                  timeout_millisec, renderer);
-
-  // Clean up memory as needed
-  pixDestroy(&pix);
+  bool r = false;
+  if (tiff) {
+    r = ProcessPagesMultipageTiff(data, buf.size(), filename, retry_config,
+                                  timeout_millisec, renderer,
+                                  tesseract_->tessedit_page_number);
+  } else {
+    r = ProcessPage(pix, 0, filename, retry_config,
+                    timeout_millisec, renderer);
+    pixDestroy(&pix);
+  }
 
   // End the output
   if (!r || (renderer && !renderer->EndDocument())) {
@@ -1380,14 +1379,14 @@ static void AddBaselineCoordsTohOCR(const PageIterator *it,
 }
 
 static void AddIdTohOCR(STRING* hocr_str, const std::string base, int num1, int num2) {
-  const unsigned long BUFSIZE = 64;
-  char id_buffer[BUFSIZE];
+  unsigned long bufsize = base.length() + 2 * kMaxIntSize;
+  char id_buffer[bufsize];
   if (num2 >= 0) {
-    snprintf(id_buffer, BUFSIZE - 1, "%s_%d_%d", base.c_str(), num1, num2);
+    snprintf(id_buffer, bufsize - 1, "%s_%d_%d", base.c_str(), num1, num2);
   } else {
-    snprintf(id_buffer, BUFSIZE - 1, "%s_%d", base.c_str(), num1);
+    snprintf(id_buffer, bufsize - 1, "%s_%d", base.c_str(), num1);
   }
-  id_buffer[BUFSIZE - 1] = '\0';
+  id_buffer[bufsize - 1] = '\0';
   *hocr_str += " id='";
   *hocr_str += id_buffer;
   *hocr_str += "'";
@@ -1418,19 +1417,6 @@ static void AddBoxTohOCR(const ResultIterator *it,
   *hocr_str += "\">";
 }
 
-static void AddBoxToTSV(const PageIterator *it,
-                         PageIteratorLevel level,
-                         STRING* hocr_str) {
-  int left, top, right, bottom;
-  it->BoundingBox(level, &left, &top, &right, &bottom);
-  hocr_str->add_str_int("\t", left);
-  hocr_str->add_str_int("\t", top);
-  hocr_str->add_str_int("\t", right - left);
-  hocr_str->add_str_int("\t", bottom - top);
-}
-
-
-
 /**
  * Make a HTML-formatted string with hOCR markup from the internal
  * data structures.
@@ -1440,26 +1426,12 @@ static void AddBoxToTSV(const PageIterator *it,
  * STL removed from original patch submission and refactored by rays.
  */
 char* TessBaseAPI::GetHOCRText(int page_number) {
-  return GetHOCRText(NULL,page_number);
-}
-
-/**
- * Make a HTML-formatted string with hOCR markup from the internal
- * data structures.
- * page_number is 0-based but will appear in the output as 1-based.
- * Image name/input_file_ can be set by SetInputName before calling
- * GetHOCRText
- * STL removed from original patch submission and refactored by rays.
- */
-char* TessBaseAPI::GetHOCRText(ETEXT_DESC* monitor, int page_number) {
   if (tesseract_ == NULL ||
-      (page_res_ == NULL && Recognize(monitor) < 0))
+      (page_res_ == NULL && Recognize(NULL) < 0))
     return NULL;
 
   int lcnt = 1, bcnt = 1, pcnt = 1, wcnt = 1;
   int page_id = page_number + 1;  // hOCR uses 1-based page numbers.
-  bool para_is_ltr = true; // Default direction is LTR
-  const char* paragraph_lang = NULL;
   bool font_info = false;
   GetBoolVariable("hocr_font_info", &font_info);
 
@@ -1509,24 +1481,18 @@ char* TessBaseAPI::GetHOCRText(ETEXT_DESC* monitor, int page_number) {
 
     // Open any new block/paragraph/textline.
     if (res_it->IsAtBeginningOf(RIL_BLOCK)) {
-      para_is_ltr = true; // reset to default direction
       hocr_str += "   <div class='ocr_carea'";
       AddIdTohOCR(&hocr_str, "block", page_id, bcnt);
       AddBoxTohOCR(res_it, RIL_BLOCK, &hocr_str);
     }
     if (res_it->IsAtBeginningOf(RIL_PARA)) {
       hocr_str += "\n    <p class='ocr_par'";
-      para_is_ltr = res_it->ParagraphIsLtr();
-      if (!para_is_ltr) {
+      if (res_it->ParagraphIsLtr()) {
+        hocr_str += " dir='ltr'";
+      } else {
         hocr_str += " dir='rtl'";
       }
       AddIdTohOCR(&hocr_str, "par", page_id, pcnt);
-      paragraph_lang = res_it->WordRecognitionLanguage();
-      if (paragraph_lang) {
-          hocr_str += " lang='";
-          hocr_str += paragraph_lang;
-          hocr_str += "'";
-      }
       AddBoxTohOCR(res_it, RIL_PARA, &hocr_str);
     }
     if (res_it->IsAtBeginningOf(RIL_TEXTLINE)) {
@@ -1559,18 +1525,14 @@ char* TessBaseAPI::GetHOCRText(ETEXT_DESC* monitor, int page_number) {
       hocr_str.add_str_int("; x_fsize ", pointsize);
     }
     hocr_str += "'";
-    const char* lang = res_it->WordRecognitionLanguage();
-    if (lang && (!paragraph_lang || strcmp(lang, paragraph_lang))) {
+    if (res_it->WordRecognitionLanguage()) {
       hocr_str += " lang='";
-      hocr_str += lang;
+      hocr_str += res_it->WordRecognitionLanguage();
       hocr_str += "'";
     }
     switch (res_it->WordDirection()) {
-      // Only emit direction if different from current paragraph direction
-      case DIR_LEFT_TO_RIGHT: if (!para_is_ltr) hocr_str += " dir='ltr'"; break;
-      case DIR_RIGHT_TO_LEFT: if (para_is_ltr) hocr_str += " dir='rtl'"; break;
-      case DIR_MIX:
-      case DIR_NEUTRAL:
+      case DIR_LEFT_TO_RIGHT: hocr_str += " dir='ltr'"; break;
+      case DIR_RIGHT_TO_LEFT: hocr_str += " dir='rtl'"; break;
       default:  // Do nothing.
         break;
     }
@@ -1600,7 +1562,6 @@ char* TessBaseAPI::GetHOCRText(ETEXT_DESC* monitor, int page_number) {
     if (last_word_in_para) {
       hocr_str += "\n    </p>\n";
       pcnt++;
-      para_is_ltr = true; // back to default direction
     }
     if (last_word_in_block) {
       hocr_str += "   </div>\n";
@@ -1611,113 +1572,6 @@ char* TessBaseAPI::GetHOCRText(ETEXT_DESC* monitor, int page_number) {
 
   char *ret = new char[hocr_str.length() + 1];
   strcpy(ret, hocr_str.string());
-  delete res_it;
-  return ret;
-}
-
-/**
- * Make a TSV-formatted string from the internal data structures.
- * page_number is 0-based but will appear in the output as 1-based.
- */
-char* TessBaseAPI::GetTSVText(int page_number) {
-  if (tesseract_ == NULL ||
-      (page_res_ == NULL && Recognize(NULL) < 0))
-    return NULL;
-
-  int lcnt = 1, bcnt = 1, pcnt = 1, wcnt = 1;
-  int page_id = page_number + 1;  // we use 1-based page numbers.
-
-  STRING tsv_str("");
-
-  int page_num = page_id, block_num = 0, par_num = 0, line_num = 0, word_num = 0;
-
-  tsv_str.add_str_int("1\t", page_num); // level 1 - page
-  tsv_str.add_str_int("\t", block_num);
-  tsv_str.add_str_int("\t", par_num);
-  tsv_str.add_str_int("\t", line_num);
-  tsv_str.add_str_int("\t", word_num);
-  tsv_str.add_str_int("\t", rect_left_);
-  tsv_str.add_str_int("\t", rect_top_);
-  tsv_str.add_str_int("\t", rect_width_);
-  tsv_str.add_str_int("\t", rect_height_);
-  tsv_str += "\t-1\t\n";
-
-  ResultIterator *res_it = GetIterator();
-  while (!res_it->Empty(RIL_BLOCK)) {
-    if (res_it->Empty(RIL_WORD)) {
-      res_it->Next(RIL_WORD);
-      continue;
-    }
-
-    // Add rows for any new block/paragraph/textline.
-    if (res_it->IsAtBeginningOf(RIL_BLOCK)) {
-      block_num++, par_num = 0, line_num = 0, word_num = 0;
-      tsv_str.add_str_int("2\t", page_num); // level 2 - block
-      tsv_str.add_str_int("\t", block_num);
-      tsv_str.add_str_int("\t", par_num);
-      tsv_str.add_str_int("\t", line_num);
-      tsv_str.add_str_int("\t", word_num);
-      AddBoxToTSV(res_it, RIL_BLOCK, &tsv_str);
-      tsv_str += "\t-1\t\n"; // end of row for block
-    }
-    if (res_it->IsAtBeginningOf(RIL_PARA)) {
-      par_num++, line_num = 0, word_num = 0;
-      tsv_str.add_str_int("3\t", page_num); // level 3 - paragraph
-      tsv_str.add_str_int("\t", block_num);
-      tsv_str.add_str_int("\t", par_num);
-      tsv_str.add_str_int("\t", line_num);
-      tsv_str.add_str_int("\t", word_num);
-      AddBoxToTSV(res_it, RIL_PARA, &tsv_str);
-      tsv_str += "\t-1\t\n"; // end of row for para
-    }
-    if (res_it->IsAtBeginningOf(RIL_TEXTLINE)) {
-      line_num++, word_num = 0;
-      tsv_str.add_str_int("4\t", page_num); // level 4 - line
-      tsv_str.add_str_int("\t", block_num);
-      tsv_str.add_str_int("\t", par_num);
-      tsv_str.add_str_int("\t", line_num);
-      tsv_str.add_str_int("\t", word_num);
-      AddBoxToTSV(res_it, RIL_TEXTLINE, &tsv_str);
-      tsv_str += "\t-1\t\n"; // end of row for line
-    }
-
-    // Now, process the word...
-    int left, top, right, bottom;
-    bool bold, italic, underlined, monospace, serif, smallcaps;
-    int pointsize, font_id;
-    const char *font_name;
-    res_it->BoundingBox(RIL_WORD, &left, &top, &right, &bottom);
-    font_name = res_it->WordFontAttributes(&bold, &italic, &underlined,
-                                           &monospace, &serif, &smallcaps,
-                                           &pointsize, &font_id);
-    word_num++;
-    tsv_str.add_str_int("5\t", page_num); // level 5 - word
-    tsv_str.add_str_int("\t", block_num);
-    tsv_str.add_str_int("\t", par_num);
-    tsv_str.add_str_int("\t", line_num);
-    tsv_str.add_str_int("\t", word_num);
-    tsv_str.add_str_int("\t", left);
-    tsv_str.add_str_int("\t", top);
-    tsv_str.add_str_int("\t", right - left);
-    tsv_str.add_str_int("\t", bottom - top);
-    tsv_str.add_str_int("\t", res_it->Confidence(RIL_WORD));
-    tsv_str += "\t";
-
-    // Increment counts if at end of block/paragraph/textline.
-    if (res_it->IsAtFinalElement(RIL_TEXTLINE, RIL_WORD)) lcnt++;
-    if (res_it->IsAtFinalElement(RIL_PARA, RIL_WORD)) pcnt++;
-    if (res_it->IsAtFinalElement(RIL_BLOCK, RIL_WORD)) bcnt++;
-
-    do {
-      tsv_str += res_it->GetUTF8Text(RIL_SYMBOL);
-      res_it->Next(RIL_SYMBOL);
-    } while (!res_it->Empty(RIL_BLOCK) && !res_it->IsAtBeginningOf(RIL_WORD));
-    tsv_str += "\n"; // end of row
-    wcnt++;
-  }
-
-  char *ret = new char[tsv_str.length() + 1];
-  strcpy(ret, tsv_str.string());
   delete res_it;
   return ret;
 }
@@ -1734,6 +1588,7 @@ const int kBytesPerNumber = 5;
  * * kNumbersPerBlob plus the newline. Add to this the
  * original UTF8 characters, and one kMaxBytesPerLine for safety.
  */
+const int kBytesPerBlob = kNumbersPerBlob * (kBytesPerNumber + 1) + 1;
 const int kBytesPerBoxFileLine = (kBytesPerNumber + 1) * kNumbersPerBlob + 1;
 /** Max bytes in the decimal representation of inT64. */
 const int kBytesPer64BitNumber = 20;
@@ -1924,11 +1779,11 @@ char* TessBaseAPI::GetOsdText(int page_number) {
   int script_id = osr.get_best_script(orient_id);
   float orient_conf = osr.best_result.oconfidence;
   float script_conf = osr.best_result.sconfidence;
-  const char* script_name =
+  const char* script_name = 
       osr.unicharset->get_script_from_script_id(script_id);
 
   // clockwise orientation of the input image, in degrees
-  int orient_deg = orient_id * 90;
+  int orient_deg = orient_id * 90; 
 
   // clockwise rotation needed to make the page upright
   int rotate =  OrientationIdToValue(orient_id);
@@ -2073,7 +1928,6 @@ void TessBaseAPI::Clear() {
  * other than Init and anything declared above it in the class definition.
  */
 void TessBaseAPI::End() {
-  Clear();
   if (thresholder_ != NULL) {
     delete thresholder_;
     thresholder_ = NULL;

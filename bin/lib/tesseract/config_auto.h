@@ -11,10 +11,13 @@
 /* #undef AC_APPLE_UNIVERSAL_BUILD */
 
 /* Define to be the git revision */
-#define GIT_REV "1dbc8c1"
+#define GIT_REV "3.04.01"
 
 /* Disable graphics */
 /* #undef GRAPHICS_DISABLED */
+
+/* Define to 1 if you have the <cairo/cairo-version.h> header file. */
+/* #undef HAVE_CAIRO_CAIRO_VERSION_H */
 
 /* Define to 1 if you have the <CL/cl.h> header file. */
 /* #undef HAVE_CL_CL_H */
@@ -54,6 +57,10 @@
 
 /* Define to 1 if you have the <OpenCL/cl.h> header file. */
 /* #undef HAVE_OPENCL_CL_H */
+
+/* Define to 1 if you have the <pango-1.0/pango/pango-features.h> header file.
+   */
+/* #undef HAVE_PANGO_1_0_PANGO_PANGO_FEATURES_H */
 
 /* Define to 1 if you have the `snprintf' function. */
 #define HAVE_SNPRINTF 1
@@ -120,13 +127,13 @@
 #define PACKAGE_BUGREPORT "https://github.com/tesseract-ocr/tesseract/issues"
 
 /* Official date of release */
-#define PACKAGE_DATE "07/11"
+#define PACKAGE_DATE "02/16"
 
 /* Name of package */
 #define PACKAGE_NAME "tesseract"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "tesseract 3.05.00dev"
+#define PACKAGE_STRING "tesseract 3.04.01"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "tesseract"
@@ -135,10 +142,10 @@
 #define PACKAGE_URL ""
 
 /* Version number */
-#define PACKAGE_VERSION "3.05.00dev"
+#define PACKAGE_VERSION "3.04.01"
 
 /* Official year for this release */
-#define PACKAGE_YEAR "2015"
+#define PACKAGE_YEAR "2016"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
@@ -147,7 +154,7 @@
 #define TIME_WITH_SYS_TIME 1
 
 /* Version number of package */
-#define VERSION "3.05.00dev"
+#define VERSION "3.04.01"
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */

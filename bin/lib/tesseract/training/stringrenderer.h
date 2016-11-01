@@ -90,10 +90,6 @@ class StringRenderer {
   void set_underline_style(const PangoUnderline style) {
     underline_style_ = style;
   }
-  void set_features(const char *features) {
-    free(features_);
-    features_ = strdup(features);
-  }
   void set_page(int page) {
     page_ = page;
   }
@@ -130,10 +126,10 @@ class StringRenderer {
   const PangoFontInfo& font() const {
     return font_;
   }
-  int h_margin() const {
+  const int h_margin() const {
     return h_margin_;
   }
-  int v_margin() const {
+  const int v_margin() const {
     return v_margin_;
   }
 
@@ -189,7 +185,6 @@ class StringRenderer {
   double underline_start_prob_;
   double underline_continuation_prob_;
   PangoUnderline underline_style_;
-  char *features_;
   // Text filtering options
   bool drop_uncovered_chars_;
   bool strip_unrenderable_words_;

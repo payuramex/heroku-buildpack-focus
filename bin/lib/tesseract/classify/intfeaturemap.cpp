@@ -30,6 +30,7 @@
 namespace tesseract {
 
 const int kMaxOffsetDist = 32;
+const double kMinPCLengthIncrease = 1.0 / 1024;
 
 IntFeatureMap::IntFeatureMap()
   : mapping_changed_(true), compact_size_(0) {

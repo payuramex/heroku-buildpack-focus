@@ -15,6 +15,9 @@
 /* Disable graphics */
 #undef GRAPHICS_DISABLED
 
+/* Define to 1 if you have the <cairo/cairo-version.h> header file. */
+#undef HAVE_CAIRO_CAIRO_VERSION_H
+
 /* Define to 1 if you have the <CL/cl.h> header file. */
 #undef HAVE_CL_CL_H
 
@@ -53,6 +56,10 @@
 
 /* Define to 1 if you have the <OpenCL/cl.h> header file. */
 #undef HAVE_OPENCL_CL_H
+
+/* Define to 1 if you have the <pango-1.0/pango/pango-features.h> header file.
+   */
+#undef HAVE_PANGO_1_0_PANGO_PANGO_FEATURES_H
 
 /* Define to 1 if you have the `snprintf' function. */
 #undef HAVE_SNPRINTF

@@ -33,34 +33,17 @@
 #include "openclwrapper.h"
 #include "osdetect.h"
 
-#if defined(HAVE_TIFFIO_H) && defined(_WIN32)
-
-#include <tiffio.h>
-#include <windows.h>
-
-static void Win32WarningHandler(const char* module, const char* fmt,
-                                va_list ap) {
-    if (module != NULL) {
-        fprintf(stderr, "%s: ", module);
-    }
-    fprintf(stderr, "Warning, ");
-    vfprintf(stderr, fmt, ap);
-    fprintf(stderr, ".\n");
-}
-
-#endif /* HAVE_TIFFIO_H &&  _WIN32 */
-
 void PrintVersionInfo() {
     char *versionStrP;
 
-    printf("tesseract %s\n", tesseract::TessBaseAPI::Version());
+    fprintf(stderr, "tesseract %s\n", tesseract::TessBaseAPI::Version());
 
     versionStrP = getLeptonicaVersion();
-    printf(" %s\n", versionStrP);
+    fprintf(stderr, " %s\n", versionStrP);
     lept_free(versionStrP);
 
     versionStrP = getImagelibVersions();
-    printf("  %s\n", versionStrP);
+    fprintf(stderr, "  %s\n", versionStrP);
     lept_free(versionStrP);
 
 #ifdef USE_OPENCL
@@ -71,24 +54,24 @@ void PrintVersionInfo() {
     char info[256];
     int i;
 
-    printf(" OpenCL info:\n");
+    fprintf(stderr, " OpenCL info:\n");
     clGetPlatformIDs(1, &platform, &num_platforms);
-    printf("  Found %d platforms.\n", num_platforms);
+    fprintf(stderr, "  Found %d platforms.\n", num_platforms);
     clGetPlatformInfo(platform, CL_PLATFORM_NAME, 256, info, 0);
-    printf("  Platform name: %s.\n", info);
+    fprintf(stderr, "  Platform name: %s.\n", info);
     clGetPlatformInfo(platform, CL_PLATFORM_VERSION, 256, info, 0);
-    printf("  Version: %s.\n", info);
+    fprintf(stderr, "  Version: %s.\n", info);
     clGetDeviceIDs(platform, CL_DEVICE_TYPE_ALL, 2, devices, &num_devices);
-    printf("  Found %d devices.\n", num_devices);
+    fprintf(stderr, "  Found %d devices.\n", num_devices);
     for (i = 0; i < num_devices; ++i) {
       clGetDeviceInfo(devices[i], CL_DEVICE_NAME, 256, info, 0);
-      printf("    Device %d name: %s.\n", i+1, info);
+      fprintf(stderr, "    Device %d name: %s.\n", i+1, info);
     }
 #endif
 }
 
 void PrintUsage(const char* program) {
-  printf(
+  fprintf(stderr,
       "Usage:\n"
       "  %s --help | --help-psm | --version\n"
       "  %s --list-langs [--tessdata-dir PATH]\n"
@@ -122,7 +105,7 @@ void PrintHelpForPSM() {
         #endif
         ;
 
-  printf("%s", msg);
+  fprintf(stderr, "%s", msg);
 }
 
 void PrintHelpMessage(const char* program) {
@@ -140,7 +123,7 @@ void PrintHelpMessage(const char* program) {
       "NOTE: These options must occur before any configfile.\n"
      ;
 
-  printf("\n%s\n", ocr_options);
+  fprintf(stderr, "\n%s\n", ocr_options);
   PrintHelpForPSM();
 
   const char *single_options =
@@ -152,7 +135,7 @@ void PrintHelpMessage(const char* program) {
       "  --print-parameters    Print tesseract parameters to stdout.\n"
       ;
 
-  printf("\n%s", single_options);
+  fprintf(stderr, "\n%s", single_options);
 }
 
 void SetVariablesFromCLArgs(tesseract::TessBaseAPI* api, int argc, char** argv) {
@@ -181,17 +164,13 @@ void SetVariablesFromCLArgs(tesseract::TessBaseAPI* api, int argc, char** argv) 
 void PrintLangsList(tesseract::TessBaseAPI* api) {
   GenericVector<STRING> languages;
   api->GetAvailableLanguagesAsVector(&languages);
-  printf("List of available languages (%d):\n", languages.size());
+  fprintf(stderr, "List of available languages (%d):\n",
+          languages.size());
   for (int index = 0; index < languages.size(); ++index) {
     STRING& string = languages[index];
-    printf("%s\n", string.string());
+    fprintf(stderr, "%s\n", string.string());
   }
   api->End();
-}
-
-void PrintBanner() {
-    tprintf("Tesseract Open Source OCR Engine v%s with Leptonica\n",
-           tesseract::TessBaseAPI::Version());
 }
 
 /**
@@ -296,6 +275,12 @@ void ParseArgs(const int argc, char** argv,
     PrintHelpMessage(argv[0]);
     exit(1);
   }
+
+  if (*outputbase != NULL && strcmp(*outputbase, "-") &&
+      strcmp(*outputbase, "stdout")) {
+    tprintf("Tesseract Open Source OCR Engine v%s with Leptonica\n",
+           tesseract::TessBaseAPI::Version());
+  }
 }
 
 void PreloadRenderers(tesseract::TessBaseAPI* api,
@@ -312,14 +297,6 @@ void PreloadRenderers(tesseract::TessBaseAPI* api,
       api->GetBoolVariable("hocr_font_info", &font_info);
       renderers->push_back(
                      new tesseract::TessHOcrRenderer(outputbase, font_info));
-    }
-
-    api->GetBoolVariable("tessedit_create_tsv", &b);
-    if (b) {
-      bool font_info;
-      api->GetBoolVariable("hocr_font_info", &font_info);
-      renderers->push_back(
-          new tesseract::TessTsvRenderer(outputbase, font_info));
     }
 
     api->GetBoolVariable("tessedit_create_pdf", &b);
@@ -358,8 +335,6 @@ void PreloadRenderers(tesseract::TessBaseAPI* api,
  *  main()
  *
  **********************************************************************/
-
-
 int main(int argc, char **argv) {
   const char* lang = "eng";
   const char* image = NULL;
@@ -367,29 +342,14 @@ int main(int argc, char **argv) {
   const char* datapath = NULL;
   bool list_langs = false;
   bool print_parameters = false;
+  GenericVector<STRING> vars_vec, vars_values;
   int arg_i = 1;
   tesseract::PageSegMode pagesegmode = tesseract::PSM_AUTO;
-  /* main() calls functions like ParseArgs which call exit().
-   * This results in memory leaks if vars_vec and vars_values are
-   * declared as auto variables (destructor is not called then). */
-  static GenericVector<STRING> vars_vec;
-  static GenericVector<STRING> vars_values;
-
-#if defined(HAVE_TIFFIO_H) && defined(_WIN32)
-  /* Show libtiff warnings on console (not in GUI). */
-  TIFFSetWarningHandler(Win32WarningHandler);
-#endif /* HAVE_TIFFIO_H &&  _WIN32 */
 
   ParseArgs(argc, argv,
           &lang, &image, &outputbase, &datapath,
           &list_langs, &print_parameters,
           &vars_vec, &vars_values, &arg_i, &pagesegmode);
-
-  bool banner = false;
-  if (outputbase != NULL && strcmp(outputbase, "-") &&
-      strcmp(outputbase, "stdout")) {
-    banner = true;
-  }
 
   PERF_COUNT_START("Tesseract:main")
   tesseract::TessBaseAPI api;
@@ -462,8 +422,6 @@ int main(int argc, char **argv) {
 
   tesseract::PointerVector<tesseract::TessResultRenderer> renderers;
 
-
-
   if (in_training_mode) {
     renderers.push_back(NULL);
   } else {
@@ -471,7 +429,6 @@ int main(int argc, char **argv) {
   }
 
   if (!renderers.empty()) {
-    if (banner) PrintBanner();
     bool succeed = api.ProcessPages(image, NULL, 0, renderers[0]);
     if (!succeed) {
       fprintf(stderr, "Error during processing.\n");

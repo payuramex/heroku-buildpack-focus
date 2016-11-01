@@ -1572,94 +1572,6 @@ m4trace:/usr/share/aclocal/lt~obsolete.m4:93: -1- AC_DEFUN([_LT_AC_PROG_CXXCPP])
 m4trace:/usr/share/aclocal/lt~obsolete.m4:96: -1- AC_DEFUN([_LT_PROG_F77])
 m4trace:/usr/share/aclocal/lt~obsolete.m4:97: -1- AC_DEFUN([_LT_PROG_FC])
 m4trace:/usr/share/aclocal/lt~obsolete.m4:98: -1- AC_DEFUN([_LT_PROG_CXX])
-m4trace:/usr/share/aclocal/pkg.m4:27: -1- AC_DEFUN([PKG_PROG_PKG_CONFIG], [m4_pattern_forbid([^_?PKG_[A-Z_]+$])
-m4_pattern_allow([^PKG_CONFIG(_(PATH|LIBDIR|SYSROOT_DIR|ALLOW_SYSTEM_(CFLAGS|LIBS)))?$])
-m4_pattern_allow([^PKG_CONFIG_(DISABLE_UNINSTALLED|TOP_BUILD_DIR|DEBUG_SPEW)$])
-AC_ARG_VAR([PKG_CONFIG], [path to pkg-config utility])
-AC_ARG_VAR([PKG_CONFIG_PATH], [directories to add to pkg-config's search path])
-AC_ARG_VAR([PKG_CONFIG_LIBDIR], [path overriding pkg-config's built-in search path])
-
-if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
-	AC_PATH_TOOL([PKG_CONFIG], [pkg-config])
-fi
-if test -n "$PKG_CONFIG"; then
-	_pkg_min_version=m4_default([$1], [0.9.0])
-	AC_MSG_CHECKING([pkg-config is at least version $_pkg_min_version])
-	if $PKG_CONFIG --atleast-pkgconfig-version $_pkg_min_version; then
-		AC_MSG_RESULT([yes])
-	else
-		AC_MSG_RESULT([no])
-		PKG_CONFIG=""
-	fi
-fi[]dnl
-])
-m4trace:/usr/share/aclocal/pkg.m4:60: -1- AC_DEFUN([PKG_CHECK_EXISTS], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
-if test -n "$PKG_CONFIG" && \
-    AC_RUN_LOG([$PKG_CONFIG --exists --print-errors "$1"]); then
-  m4_default([$2], [:])
-m4_ifvaln([$3], [else
-  $3])dnl
-fi])
-m4trace:/usr/share/aclocal/pkg.m4:86: -1- AC_DEFUN([_PKG_SHORT_ERRORS_SUPPORTED], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])
-if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
-        _pkg_short_errors_supported=yes
-else
-        _pkg_short_errors_supported=no
-fi[]dnl
-])
-m4trace:/usr/share/aclocal/pkg.m4:106: -1- AC_DEFUN([PKG_CHECK_MODULES], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
-AC_ARG_VAR([$1][_CFLAGS], [C compiler flags for $1, overriding pkg-config])dnl
-AC_ARG_VAR([$1][_LIBS], [linker flags for $1, overriding pkg-config])dnl
-
-pkg_failed=no
-AC_MSG_CHECKING([for $1])
-
-_PKG_CONFIG([$1][_CFLAGS], [cflags], [$2])
-_PKG_CONFIG([$1][_LIBS], [libs], [$2])
-
-m4_define([_PKG_TEXT], [Alternatively, you may set the environment variables $1[]_CFLAGS
-and $1[]_LIBS to avoid the need to call pkg-config.
-See the pkg-config man page for more details.])
-
-if test $pkg_failed = yes; then
-   	AC_MSG_RESULT([no])
-        _PKG_SHORT_ERRORS_SUPPORTED
-        if test $_pkg_short_errors_supported = yes; then
-	        $1[]_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "$2" 2>&1`
-        else 
-	        $1[]_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "$2" 2>&1`
-        fi
-	# Put the nasty error message in config.log where it belongs
-	echo "$$1[]_PKG_ERRORS" >&AS_MESSAGE_LOG_FD
-
-	m4_default([$4], [AC_MSG_ERROR(
-[Package requirements ($2) were not met:
-
-$$1_PKG_ERRORS
-
-Consider adjusting the PKG_CONFIG_PATH environment variable if you
-installed software in a non-standard prefix.
-
-_PKG_TEXT])[]dnl
-        ])
-elif test $pkg_failed = untried; then
-     	AC_MSG_RESULT([no])
-	m4_default([$4], [AC_MSG_FAILURE(
-[The pkg-config script could not be found or is too old.  Make sure it
-is in your PATH or set the PKG_CONFIG environment variable to the full
-path to pkg-config.
-
-_PKG_TEXT
-
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.])[]dnl
-        ])
-else
-	$1[]_CFLAGS=$pkg_cv_[]$1[]_CFLAGS
-	$1[]_LIBS=$pkg_cv_[]$1[]_LIBS
-        AC_MSG_RESULT([yes])
-	$3
-fi[]dnl
-])
 m4trace:/usr/share/aclocal-1.14/amversion.m4:14: -1- AC_DEFUN([AM_AUTOMAKE_VERSION], [am__api_version='1.14'
 dnl Some users find AM_AUTOMAKE_VERSION and mistake it for a way to
 dnl require some minimum version.  Point them to the right macro.
@@ -2681,86 +2593,89 @@ m4trace:configure.ac:96: -1- m4_pattern_allow([^ADD_RT_TRUE$])
 m4trace:configure.ac:96: -1- m4_pattern_allow([^ADD_RT_FALSE$])
 m4trace:configure.ac:96: -1- _AM_SUBST_NOTMAKE([ADD_RT_TRUE])
 m4trace:configure.ac:96: -1- _AM_SUBST_NOTMAKE([ADD_RT_FALSE])
-m4trace:configure.ac:97: -1- m4_pattern_allow([^AM_LDFLAGS$])
-m4trace:configure.ac:101: -1- AM_CONDITIONAL([ADD_RT], [true])
-m4trace:configure.ac:101: -1- m4_pattern_allow([^ADD_RT_TRUE$])
-m4trace:configure.ac:101: -1- m4_pattern_allow([^ADD_RT_FALSE$])
-m4trace:configure.ac:101: -1- _AM_SUBST_NOTMAKE([ADD_RT_TRUE])
-m4trace:configure.ac:101: -1- _AM_SUBST_NOTMAKE([ADD_RT_FALSE])
-m4trace:configure.ac:106: -1- AM_CONDITIONAL([ADD_RT], [false])
-m4trace:configure.ac:106: -1- m4_pattern_allow([^ADD_RT_TRUE$])
-m4trace:configure.ac:106: -1- m4_pattern_allow([^ADD_RT_FALSE$])
-m4trace:configure.ac:106: -1- _AM_SUBST_NOTMAKE([ADD_RT_TRUE])
-m4trace:configure.ac:106: -1- _AM_SUBST_NOTMAKE([ADD_RT_FALSE])
-m4trace:configure.ac:113: -1- AM_CONDITIONAL([ADD_RT], [true])
-m4trace:configure.ac:113: -1- m4_pattern_allow([^ADD_RT_TRUE$])
-m4trace:configure.ac:113: -1- m4_pattern_allow([^ADD_RT_FALSE$])
-m4trace:configure.ac:113: -1- _AM_SUBST_NOTMAKE([ADD_RT_TRUE])
-m4trace:configure.ac:113: -1- _AM_SUBST_NOTMAKE([ADD_RT_FALSE])
-m4trace:configure.ac:119: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+m4trace:configure.ac:97: -1- AM_CONDITIONAL([T_WIN], [true])
+m4trace:configure.ac:97: -1- m4_pattern_allow([^T_WIN_TRUE$])
+m4trace:configure.ac:97: -1- m4_pattern_allow([^T_WIN_FALSE$])
+m4trace:configure.ac:97: -1- _AM_SUBST_NOTMAKE([T_WIN_TRUE])
+m4trace:configure.ac:97: -1- _AM_SUBST_NOTMAKE([T_WIN_FALSE])
+m4trace:configure.ac:98: -1- m4_pattern_allow([^AM_LDFLAGS$])
+m4trace:configure.ac:102: -1- AM_CONDITIONAL([ADD_RT], [true])
+m4trace:configure.ac:102: -1- m4_pattern_allow([^ADD_RT_TRUE$])
+m4trace:configure.ac:102: -1- m4_pattern_allow([^ADD_RT_FALSE$])
+m4trace:configure.ac:102: -1- _AM_SUBST_NOTMAKE([ADD_RT_TRUE])
+m4trace:configure.ac:102: -1- _AM_SUBST_NOTMAKE([ADD_RT_FALSE])
+m4trace:configure.ac:107: -1- AM_CONDITIONAL([ADD_RT], [false])
+m4trace:configure.ac:107: -1- m4_pattern_allow([^ADD_RT_TRUE$])
+m4trace:configure.ac:107: -1- m4_pattern_allow([^ADD_RT_FALSE$])
+m4trace:configure.ac:107: -1- _AM_SUBST_NOTMAKE([ADD_RT_TRUE])
+m4trace:configure.ac:107: -1- _AM_SUBST_NOTMAKE([ADD_RT_FALSE])
+m4trace:configure.ac:114: -1- AM_CONDITIONAL([ADD_RT], [true])
+m4trace:configure.ac:114: -1- m4_pattern_allow([^ADD_RT_TRUE$])
+m4trace:configure.ac:114: -1- m4_pattern_allow([^ADD_RT_FALSE$])
+m4trace:configure.ac:114: -1- _AM_SUBST_NOTMAKE([ADD_RT_TRUE])
+m4trace:configure.ac:114: -1- _AM_SUBST_NOTMAKE([ADD_RT_FALSE])
+m4trace:configure.ac:121: -2- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
 You should run autoupdate.], [../../lib/autoconf/general.m4:207: AC_HELP_STRING is expanded from...
-../../lib/autoconf/general.m4:1481: AC_ARG_WITH is expanded from...
-configure.ac:119: the top level])
-m4trace:configure.ac:128: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+configure.ac:121: the top level])
+m4trace:configure.ac:130: -2- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
 You should run autoupdate.], [../../lib/autoconf/general.m4:207: AC_HELP_STRING is expanded from...
-../../lib/autoconf/general.m4:1481: AC_ARG_WITH is expanded from...
-configure.ac:128: the top level])
-m4trace:configure.ac:138: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
-You should run autoupdate.], [../../lib/autoconf/general.m4:207: AC_HELP_STRING is expanded from...
-../../lib/autoconf/general.m4:1462: AC_ARG_ENABLE is expanded from...
-configure.ac:138: the top level])
-m4trace:configure.ac:138: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
-You should run autoupdate.], [../../lib/autoconf/general.m4:207: AC_HELP_STRING is expanded from...
-../../lib/autoconf/general.m4:1462: AC_ARG_ENABLE is expanded from...
-configure.ac:138: the top level])
-m4trace:configure.ac:145: -1- m4_pattern_allow([^GRAPHICS_DISABLED$])
-m4trace:configure.ac:146: -1- AM_CONDITIONAL([GRAPHICS_DISABLED], [true])
-m4trace:configure.ac:146: -1- m4_pattern_allow([^GRAPHICS_DISABLED_TRUE$])
-m4trace:configure.ac:146: -1- m4_pattern_allow([^GRAPHICS_DISABLED_FALSE$])
-m4trace:configure.ac:146: -1- _AM_SUBST_NOTMAKE([GRAPHICS_DISABLED_TRUE])
-m4trace:configure.ac:146: -1- _AM_SUBST_NOTMAKE([GRAPHICS_DISABLED_FALSE])
-m4trace:configure.ac:151: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+configure.ac:130: the top level])
+m4trace:configure.ac:139: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
 You should run autoupdate.], [../../lib/autoconf/general.m4:207: AC_HELP_STRING is expanded from...
 ../../lib/autoconf/general.m4:1462: AC_ARG_ENABLE is expanded from...
-configure.ac:151: the top level])
-m4trace:configure.ac:155: -1- AM_CONDITIONAL([NO_CUBE_BUILD], [test "$disable_cube" = "yes"])
-m4trace:configure.ac:155: -1- m4_pattern_allow([^NO_CUBE_BUILD_TRUE$])
-m4trace:configure.ac:155: -1- m4_pattern_allow([^NO_CUBE_BUILD_FALSE$])
-m4trace:configure.ac:155: -1- _AM_SUBST_NOTMAKE([NO_CUBE_BUILD_TRUE])
-m4trace:configure.ac:155: -1- _AM_SUBST_NOTMAKE([NO_CUBE_BUILD_FALSE])
-m4trace:configure.ac:157: -1- m4_pattern_allow([^AM_CPPFLAGS$])
-m4trace:configure.ac:167: -1- AM_CONDITIONAL([EMBEDDED], [test "$enable_embedded" = "yes"])
-m4trace:configure.ac:167: -1- m4_pattern_allow([^EMBEDDED_TRUE$])
-m4trace:configure.ac:167: -1- m4_pattern_allow([^EMBEDDED_FALSE$])
-m4trace:configure.ac:167: -1- _AM_SUBST_NOTMAKE([EMBEDDED_TRUE])
-m4trace:configure.ac:167: -1- _AM_SUBST_NOTMAKE([EMBEDDED_FALSE])
-m4trace:configure.ac:169: -1- m4_pattern_allow([^AM_CPPFLAGS$])
-m4trace:configure.ac:173: -1- AM_CONDITIONAL([OPENMP], [false])
-m4trace:configure.ac:173: -1- m4_pattern_allow([^OPENMP_TRUE$])
-m4trace:configure.ac:173: -1- m4_pattern_allow([^OPENMP_FALSE$])
-m4trace:configure.ac:173: -1- _AM_SUBST_NOTMAKE([OPENMP_TRUE])
-m4trace:configure.ac:173: -1- _AM_SUBST_NOTMAKE([OPENMP_FALSE])
-m4trace:configure.ac:174: -1- m4_pattern_allow([^OPENMP_CXXFLAGS$])
-m4trace:configure.ac:175: -1- AM_CONDITIONAL([OPENMP], [true])
-m4trace:configure.ac:175: -1- m4_pattern_allow([^OPENMP_TRUE$])
-m4trace:configure.ac:175: -1- m4_pattern_allow([^OPENMP_FALSE$])
-m4trace:configure.ac:175: -1- _AM_SUBST_NOTMAKE([OPENMP_TRUE])
-m4trace:configure.ac:175: -1- _AM_SUBST_NOTMAKE([OPENMP_FALSE])
-m4trace:configure.ac:175: -1- m4_pattern_allow([^AM_CPPFLAGS$])
-m4trace:configure.ac:175: -1- m4_pattern_allow([^OPENMP$])
-m4trace:configure.ac:191: -1- m4_pattern_allow([^CXXCPP$])
-m4trace:configure.ac:191: -1- m4_pattern_allow([^CPPFLAGS$])
-m4trace:configure.ac:191: -1- m4_pattern_allow([^CXXCPP$])
-m4trace:configure.ac:191: -1- AC_PROG_EGREP
-m4trace:configure.ac:191: -1- m4_pattern_allow([^GREP$])
-m4trace:configure.ac:191: -1- m4_pattern_allow([^EGREP$])
-m4trace:configure.ac:191: -1- m4_pattern_allow([^STDC_HEADERS$])
-m4trace:configure.ac:191: -1- m4_pattern_allow([^HAVE_CL_CL_H$])
-m4trace:configure.ac:191: -1- m4_pattern_allow([^HAVE_OPENCL_CL_H$])
-m4trace:configure.ac:196: -1- m4_pattern_allow([^HAVE_TIFFIO_H$])
-m4trace:configure.ac:222: -1- m4_pattern_allow([^HAVE_FRAMEWORK_OPENCL$])
-m4trace:configure.ac:222: -1- m4_pattern_allow([^FRAMEWORK_OPENCL$])
-m4trace:configure.ac:230: -1- m4_pattern_allow([^AM_CPPFLAGS$])
+configure.ac:139: the top level])
+m4trace:configure.ac:139: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:207: AC_HELP_STRING is expanded from...
+../../lib/autoconf/general.m4:1462: AC_ARG_ENABLE is expanded from...
+configure.ac:139: the top level])
+m4trace:configure.ac:146: -1- m4_pattern_allow([^GRAPHICS_DISABLED$])
+m4trace:configure.ac:147: -1- AM_CONDITIONAL([GRAPHICS_DISABLED], [true])
+m4trace:configure.ac:147: -1- m4_pattern_allow([^GRAPHICS_DISABLED_TRUE$])
+m4trace:configure.ac:147: -1- m4_pattern_allow([^GRAPHICS_DISABLED_FALSE$])
+m4trace:configure.ac:147: -1- _AM_SUBST_NOTMAKE([GRAPHICS_DISABLED_TRUE])
+m4trace:configure.ac:147: -1- _AM_SUBST_NOTMAKE([GRAPHICS_DISABLED_FALSE])
+m4trace:configure.ac:152: -1- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
+You should run autoupdate.], [../../lib/autoconf/general.m4:207: AC_HELP_STRING is expanded from...
+../../lib/autoconf/general.m4:1462: AC_ARG_ENABLE is expanded from...
+configure.ac:152: the top level])
+m4trace:configure.ac:156: -1- AM_CONDITIONAL([NO_CUBE_BUILD], [test "$disable_cube" = "yes"])
+m4trace:configure.ac:156: -1- m4_pattern_allow([^NO_CUBE_BUILD_TRUE$])
+m4trace:configure.ac:156: -1- m4_pattern_allow([^NO_CUBE_BUILD_FALSE$])
+m4trace:configure.ac:156: -1- _AM_SUBST_NOTMAKE([NO_CUBE_BUILD_TRUE])
+m4trace:configure.ac:156: -1- _AM_SUBST_NOTMAKE([NO_CUBE_BUILD_FALSE])
+m4trace:configure.ac:158: -1- m4_pattern_allow([^AM_CPPFLAGS$])
+m4trace:configure.ac:168: -1- AM_CONDITIONAL([EMBEDDED], [test "$enable_embedded" = "yes"])
+m4trace:configure.ac:168: -1- m4_pattern_allow([^EMBEDDED_TRUE$])
+m4trace:configure.ac:168: -1- m4_pattern_allow([^EMBEDDED_FALSE$])
+m4trace:configure.ac:168: -1- _AM_SUBST_NOTMAKE([EMBEDDED_TRUE])
+m4trace:configure.ac:168: -1- _AM_SUBST_NOTMAKE([EMBEDDED_FALSE])
+m4trace:configure.ac:170: -1- m4_pattern_allow([^AM_CPPFLAGS$])
+m4trace:configure.ac:174: -1- AM_CONDITIONAL([OPENMP], [false])
+m4trace:configure.ac:174: -1- m4_pattern_allow([^OPENMP_TRUE$])
+m4trace:configure.ac:174: -1- m4_pattern_allow([^OPENMP_FALSE$])
+m4trace:configure.ac:174: -1- _AM_SUBST_NOTMAKE([OPENMP_TRUE])
+m4trace:configure.ac:174: -1- _AM_SUBST_NOTMAKE([OPENMP_FALSE])
+m4trace:configure.ac:175: -1- m4_pattern_allow([^OPENMP_CXXFLAGS$])
+m4trace:configure.ac:177: -2- AM_CONDITIONAL([OPENMP], [true])
+m4trace:configure.ac:177: -2- m4_pattern_allow([^OPENMP_TRUE$])
+m4trace:configure.ac:177: -2- m4_pattern_allow([^OPENMP_FALSE$])
+m4trace:configure.ac:177: -2- _AM_SUBST_NOTMAKE([OPENMP_TRUE])
+m4trace:configure.ac:177: -2- _AM_SUBST_NOTMAKE([OPENMP_FALSE])
+m4trace:configure.ac:178: -2- m4_pattern_allow([^AM_CPPFLAGS$])
+m4trace:configure.ac:179: -2- m4_pattern_allow([^OPENMP$])
+m4trace:configure.ac:192: -1- m4_pattern_allow([^CXXCPP$])
+m4trace:configure.ac:192: -1- m4_pattern_allow([^CPPFLAGS$])
+m4trace:configure.ac:192: -1- m4_pattern_allow([^CXXCPP$])
+m4trace:configure.ac:192: -1- AC_PROG_EGREP
+m4trace:configure.ac:192: -1- m4_pattern_allow([^GREP$])
+m4trace:configure.ac:192: -1- m4_pattern_allow([^EGREP$])
+m4trace:configure.ac:192: -1- m4_pattern_allow([^STDC_HEADERS$])
+m4trace:configure.ac:192: -1- m4_pattern_allow([^HAVE_CL_CL_H$])
+m4trace:configure.ac:192: -1- m4_pattern_allow([^HAVE_OPENCL_CL_H$])
+m4trace:configure.ac:197: -1- m4_pattern_allow([^HAVE_TIFFIO_H$])
+m4trace:configure.ac:223: -1- m4_pattern_allow([^HAVE_FRAMEWORK_OPENCL$])
+m4trace:configure.ac:223: -1- m4_pattern_allow([^FRAMEWORK_OPENCL$])
+m4trace:configure.ac:231: -1- m4_pattern_allow([^AM_CPPFLAGS$])
 m4trace:configure.ac:249: -1- m4_pattern_allow([^AM_CPPFLAGS$])
 m4trace:configure.ac:255: -1- AM_CONDITIONAL([USE_OPENCL], [test "$enable_opencl" = "yes"])
 m4trace:configure.ac:255: -1- m4_pattern_allow([^USE_OPENCL_TRUE$])
@@ -2918,75 +2833,50 @@ m4trace:configure.ac:415: -1- m4_pattern_allow([^HAVE_LONG_LONG_INT$])
 m4trace:configure.ac:416: -1- m4_pattern_allow([^HAVE_OFF_T$])
 m4trace:configure.ac:417: -1- m4_pattern_allow([^HAVE_MBSTATE_T$])
 m4trace:configure.ac:425: -1- m4_pattern_allow([^LIBLEPT_HEADERSDIR$])
-m4trace:configure.ac:444: -1- m4_pattern_allow([^HAVE_LIBLEPT$])
-m4trace:configure.ac:461: -1- AM_CONDITIONAL([ENABLE_TRAINING], [true])
-m4trace:configure.ac:461: -1- m4_pattern_allow([^ENABLE_TRAINING_TRUE$])
-m4trace:configure.ac:461: -1- m4_pattern_allow([^ENABLE_TRAINING_FALSE$])
-m4trace:configure.ac:461: -1- _AM_SUBST_NOTMAKE([ENABLE_TRAINING_TRUE])
-m4trace:configure.ac:461: -1- _AM_SUBST_NOTMAKE([ENABLE_TRAINING_FALSE])
-m4trace:configure.ac:465: -1- m4_pattern_allow([^HAVE_UNICODE_UCHAR_H$])
-m4trace:configure.ac:469: -1- AM_CONDITIONAL([ENABLE_TRAINING], [false])
-m4trace:configure.ac:469: -1- m4_pattern_allow([^ENABLE_TRAINING_TRUE$])
-m4trace:configure.ac:469: -1- m4_pattern_allow([^ENABLE_TRAINING_FALSE$])
-m4trace:configure.ac:469: -1- _AM_SUBST_NOTMAKE([ENABLE_TRAINING_TRUE])
-m4trace:configure.ac:469: -1- _AM_SUBST_NOTMAKE([ENABLE_TRAINING_FALSE])
-m4trace:configure.ac:473: -1- PKG_CHECK_MODULES([pango], [pango], [have_pango=true], [have_pango=false])
-m4trace:configure.ac:473: -1- PKG_PROG_PKG_CONFIG
-m4trace:configure.ac:473: -1- m4_pattern_forbid([^_?PKG_[A-Z_]+$])
-m4trace:configure.ac:473: -1- m4_pattern_allow([^PKG_CONFIG(_(PATH|LIBDIR|SYSROOT_DIR|ALLOW_SYSTEM_(CFLAGS|LIBS)))?$])
-m4trace:configure.ac:473: -1- m4_pattern_allow([^PKG_CONFIG_(DISABLE_UNINSTALLED|TOP_BUILD_DIR|DEBUG_SPEW)$])
-m4trace:configure.ac:473: -1- m4_pattern_allow([^PKG_CONFIG$])
-m4trace:configure.ac:473: -1- m4_pattern_allow([^PKG_CONFIG_PATH$])
-m4trace:configure.ac:473: -1- m4_pattern_allow([^PKG_CONFIG_LIBDIR$])
-m4trace:configure.ac:473: -1- m4_pattern_allow([^PKG_CONFIG$])
-m4trace:configure.ac:473: -1- m4_pattern_allow([^pango_CFLAGS$])
-m4trace:configure.ac:473: -1- m4_pattern_allow([^pango_LIBS$])
-m4trace:configure.ac:473: -1- PKG_CHECK_EXISTS([pango], [pkg_cv_[]pango_CFLAGS=`$PKG_CONFIG --[]cflags "pango" 2>/dev/null`
-		      test "x$?" != "x0" && pkg_failed=yes ], [pkg_failed=yes])
-m4trace:configure.ac:473: -1- PKG_CHECK_EXISTS([pango], [pkg_cv_[]pango_LIBS=`$PKG_CONFIG --[]libs "pango" 2>/dev/null`
-		      test "x$?" != "x0" && pkg_failed=yes ], [pkg_failed=yes])
-m4trace:configure.ac:473: -1- _PKG_SHORT_ERRORS_SUPPORTED
-m4trace:configure.ac:477: -1- AM_CONDITIONAL([ENABLE_TRAINING], [false])
+m4trace:configure.ac:443: -1- m4_pattern_allow([^HAVE_LIBLEPT$])
+m4trace:configure.ac:461: -1- m4_pattern_allow([^HAVE_UNICODE_UCHAR_H$])
+m4trace:configure.ac:466: -1- AM_CONDITIONAL([ENABLE_TRAINING], [$have_icu])
+m4trace:configure.ac:466: -1- m4_pattern_allow([^ENABLE_TRAINING_TRUE$])
+m4trace:configure.ac:466: -1- m4_pattern_allow([^ENABLE_TRAINING_FALSE$])
+m4trace:configure.ac:466: -1- _AM_SUBST_NOTMAKE([ENABLE_TRAINING_TRUE])
+m4trace:configure.ac:466: -1- _AM_SUBST_NOTMAKE([ENABLE_TRAINING_FALSE])
+m4trace:configure.ac:470: -1- m4_pattern_allow([^HAVE_PANGO_1_0_PANGO_PANGO_FEATURES_H$])
+m4trace:configure.ac:477: -1- AM_CONDITIONAL([ENABLE_TRAINING], [$have_pango])
 m4trace:configure.ac:477: -1- m4_pattern_allow([^ENABLE_TRAINING_TRUE$])
 m4trace:configure.ac:477: -1- m4_pattern_allow([^ENABLE_TRAINING_FALSE$])
 m4trace:configure.ac:477: -1- _AM_SUBST_NOTMAKE([ENABLE_TRAINING_TRUE])
 m4trace:configure.ac:477: -1- _AM_SUBST_NOTMAKE([ENABLE_TRAINING_FALSE])
-m4trace:configure.ac:483: -1- PKG_CHECK_MODULES([cairo], [cairo], [have_cairo=true], [have_cairo=false])
-m4trace:configure.ac:483: -1- m4_pattern_allow([^cairo_CFLAGS$])
-m4trace:configure.ac:483: -1- m4_pattern_allow([^cairo_LIBS$])
-m4trace:configure.ac:483: -1- PKG_CHECK_EXISTS([cairo], [pkg_cv_[]cairo_CFLAGS=`$PKG_CONFIG --[]cflags "cairo" 2>/dev/null`
-		      test "x$?" != "x0" && pkg_failed=yes ], [pkg_failed=yes])
-m4trace:configure.ac:483: -1- PKG_CHECK_EXISTS([cairo], [pkg_cv_[]cairo_LIBS=`$PKG_CONFIG --[]libs "cairo" 2>/dev/null`
-		      test "x$?" != "x0" && pkg_failed=yes ], [pkg_failed=yes])
-m4trace:configure.ac:483: -1- _PKG_SHORT_ERRORS_SUPPORTED
-m4trace:configure.ac:487: -1- AM_CONDITIONAL([ENABLE_TRAINING], [false])
-m4trace:configure.ac:487: -1- m4_pattern_allow([^ENABLE_TRAINING_TRUE$])
-m4trace:configure.ac:487: -1- m4_pattern_allow([^ENABLE_TRAINING_FALSE$])
-m4trace:configure.ac:487: -1- _AM_SUBST_NOTMAKE([ENABLE_TRAINING_TRUE])
-m4trace:configure.ac:487: -1- _AM_SUBST_NOTMAKE([ENABLE_TRAINING_FALSE])
-m4trace:configure.ac:513: -1- AM_CONDITIONAL([ENABLE_TRAINING], [false])
-m4trace:configure.ac:513: -1- m4_pattern_allow([^ENABLE_TRAINING_TRUE$])
-m4trace:configure.ac:513: -1- m4_pattern_allow([^ENABLE_TRAINING_FALSE$])
-m4trace:configure.ac:513: -1- _AM_SUBST_NOTMAKE([ENABLE_TRAINING_TRUE])
-m4trace:configure.ac:513: -1- _AM_SUBST_NOTMAKE([ENABLE_TRAINING_FALSE])
-m4trace:configure.ac:546: -1- AM_COND_IF([ENABLE_TRAINING], [AC_CONFIG_FILES(training/Makefile)])
-m4trace:configure.ac:547: -1- m4_pattern_allow([^LIB@&t@OBJS$])
-m4trace:configure.ac:547: -1- m4_pattern_allow([^LTLIBOBJS$])
-m4trace:configure.ac:547: -1- AM_CONDITIONAL([am__EXEEXT], [test -n "$EXEEXT"])
-m4trace:configure.ac:547: -1- m4_pattern_allow([^am__EXEEXT_TRUE$])
-m4trace:configure.ac:547: -1- m4_pattern_allow([^am__EXEEXT_FALSE$])
-m4trace:configure.ac:547: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_TRUE])
-m4trace:configure.ac:547: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_FALSE])
-m4trace:configure.ac:547: -1- _AC_AM_CONFIG_HEADER_HOOK(["$ac_file"])
-m4trace:configure.ac:547: -1- _AM_OUTPUT_DEPENDENCY_COMMANDS
-m4trace:configure.ac:547: -1- _LT_PROG_LTMAIN
-m4trace:configure.ac:560: -1- AM_COND_IF([ENABLE_TRAINING], [echo ""
-   echo "Training tools can be build and installed (after building of $PACKAGE_NAME) with:"
-   echo ""
-   echo "$ make training"
-   echo "$ sudo make training-install"
-   echo ""], [echo ""
-   echo "You can not build training tools because of missing dependency."
-   echo "Check configure output for details."
-   echo ""
+m4trace:configure.ac:481: -1- m4_pattern_allow([^HAVE_CAIRO_CAIRO_VERSION_H$])
+m4trace:configure.ac:488: -1- AM_CONDITIONAL([ENABLE_TRAINING], [$have_cairo])
+m4trace:configure.ac:488: -1- m4_pattern_allow([^ENABLE_TRAINING_TRUE$])
+m4trace:configure.ac:488: -1- m4_pattern_allow([^ENABLE_TRAINING_FALSE$])
+m4trace:configure.ac:488: -1- _AM_SUBST_NOTMAKE([ENABLE_TRAINING_TRUE])
+m4trace:configure.ac:488: -1- _AM_SUBST_NOTMAKE([ENABLE_TRAINING_FALSE])
+m4trace:configure.ac:511: -1- AM_CONDITIONAL([ENABLE_TRAINING], [test "x$has_cpp11" = "xyes"])
+m4trace:configure.ac:511: -1- m4_pattern_allow([^ENABLE_TRAINING_TRUE$])
+m4trace:configure.ac:511: -1- m4_pattern_allow([^ENABLE_TRAINING_FALSE$])
+m4trace:configure.ac:511: -1- _AM_SUBST_NOTMAKE([ENABLE_TRAINING_TRUE])
+m4trace:configure.ac:511: -1- _AM_SUBST_NOTMAKE([ENABLE_TRAINING_FALSE])
+m4trace:configure.ac:544: -1- AM_COND_IF([ENABLE_TRAINING], [ac_config_files="$ac_config_files training/Makefile"
+])
+m4trace:configure.ac:545: -1- m4_pattern_allow([^LIB@&t@OBJS$])
+m4trace:configure.ac:545: -1- m4_pattern_allow([^LTLIBOBJS$])
+m4trace:configure.ac:545: -1- AM_CONDITIONAL([am__EXEEXT], [test -n "$EXEEXT"])
+m4trace:configure.ac:545: -1- m4_pattern_allow([^am__EXEEXT_TRUE$])
+m4trace:configure.ac:545: -1- m4_pattern_allow([^am__EXEEXT_FALSE$])
+m4trace:configure.ac:545: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_TRUE])
+m4trace:configure.ac:545: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_FALSE])
+m4trace:configure.ac:545: -1- _AC_AM_CONFIG_HEADER_HOOK(["$ac_file"])
+m4trace:configure.ac:545: -1- _AM_OUTPUT_DEPENDENCY_COMMANDS
+m4trace:configure.ac:545: -1- _LT_PROG_LTMAIN
+m4trace:configure.ac:558: -1- AM_COND_IF([ENABLE_TRAINING], [echo ""
+  echo "Training tools can be build and installed (after building of $PACKAGE_NAME) with:"
+  echo ""
+  echo "$ make training"
+  echo "$ sudo make training-install"
+  echo ""
+], [echo ""
+  echo "You can not build training tools because of missing dependency."
+  echo "Check configure output for details."
+  echo ""
 ])

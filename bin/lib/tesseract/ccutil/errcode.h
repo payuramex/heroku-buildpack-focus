@@ -87,12 +87,21 @@ const ERRCODE ASSERT_FAILED = "Assert failed";
                         __FILE__, __LINE__);                            \
   }
 
-#define ASSERT_HOST_MSG(x, ...) if (!(x))                               \
+#ifdef _MSC_VER
+#define ASSERT_HOST_MSG(x, msg, ...) if (!(x))                            \
   {                                                                     \
-    tprintf(__VA_ARGS__);                                               \
+    tprintf(msg);                                                       \
     ASSERT_FAILED.error(#x, ABORT, "in file %s, line %d",               \
                         __FILE__, __LINE__);                            \
   }
+#else
+#define ASSERT_HOST_MSG(x, msg...) if (!(x))                            \
+  {                                                                     \
+    tprintf(msg);                                                       \
+    ASSERT_FAILED.error(#x, ABORT, "in file %s, line %d",               \
+                        __FILE__, __LINE__);                            \
+  }
+#endif
 
 void signal_exit(int signal_code);
 

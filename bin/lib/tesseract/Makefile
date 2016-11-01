@@ -84,9 +84,9 @@ DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) \
 	$(top_srcdir)/config/config.h.in $(srcdir)/tesseract.pc.in \
 	AUTHORS COPYING ChangeLog INSTALL NEWS config/compile \
-	config/config.guess config/config.sub config/install-sh \
-	config/missing config/ltmain.sh $(top_srcdir)/config/compile \
-	$(top_srcdir)/config/config.guess \
+	config/config.guess config/config.sub config/depcomp \
+	config/install-sh config/missing config/ltmain.sh \
+	$(top_srcdir)/config/compile $(top_srcdir)/config/config.guess \
 	$(top_srcdir)/config/config.sub \
 	$(top_srcdir)/config/install-sh $(top_srcdir)/config/ltmain.sh \
 	$(top_srcdir)/config/missing
@@ -262,7 +262,7 @@ GENERIC_LIBRARY_NAME = tesseract
 GENERIC_LIBRARY_VERSION = 3:4
 GENERIC_MAJOR_VERSION = 3
 GENERIC_RELEASE = 3.4
-GENERIC_VERSION = 3.4.0
+GENERIC_VERSION = 3.4.1
 GREP = /bin/grep
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
@@ -293,23 +293,20 @@ OTOOL =
 OTOOL64 = 
 PACKAGE = tesseract
 PACKAGE_BUGREPORT = https://github.com/tesseract-ocr/tesseract/issues
-PACKAGE_DATE = 07/11
+PACKAGE_DATE = 02/16
 PACKAGE_NAME = tesseract
-PACKAGE_STRING = tesseract 3.05.00dev
+PACKAGE_STRING = tesseract 3.04.01
 PACKAGE_TARNAME = tesseract
 PACKAGE_URL = 
-PACKAGE_VERSION = 3.05.00dev
-PACKAGE_YEAR = 2015
+PACKAGE_VERSION = 3.04.01
+PACKAGE_YEAR = 2016
 PATH_SEPARATOR = :
-PKG_CONFIG = /usr/bin/pkg-config
-PKG_CONFIG_LIBDIR = 
-PKG_CONFIG_PATH = 
 RANLIB = ranlib
 SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = strip
-VERSION = 3.05.00dev
+VERSION = 3.04.01
 abs_builddir = /app/tmp/tesseract
 abs_srcdir = /app/tmp/tesseract
 abs_top_builddir = /app/tmp/tesseract
@@ -330,8 +327,6 @@ build_cpu = x86_64
 build_os = linux-gnu
 build_vendor = unknown
 builddir = .
-cairo_CFLAGS = 
-cairo_LIBS = 
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
@@ -353,8 +348,6 @@ localstatedir = ${prefix}/var
 mandir = ${datarootdir}/man
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
-pango_CFLAGS = 
-pango_LIBS = 
 pdfdir = ${docdir}
 prefix = /app/.vendor/tesseract
 program_transform_name = s,x,x,
@@ -371,7 +364,7 @@ ACLOCAL_AMFLAGS = -I m4
 #TRAINING_SUBDIR = training
 SUBDIRS = ccutil viewer cutil opencl ccstruct dict classify wordrec \
 	textord $(am__append_1) ccmain api . tessdata doc
-EXTRA_DIST = README.md\
+EXTRA_DIST = ReleaseNotes README.md\
 	aclocal.m4 config configure.ac autogen.sh contrib \
 	tesseract.pc.in $(TRAINING_SUBDIR) java doc testing
 
@@ -893,15 +886,18 @@ uninstall-am: uninstall-pkgconfigDATA
 	uninstall-pkgconfigDATA
 
 #training:
+#	$(MAKE)
 #	@cd "$(top_builddir)/training" && $(MAKE)
 #training-install:
 #	@cd "$(top_builddir)/training" && $(MAKE) install
+#training-uninstall:
+#	@cd "$(top_builddir)/training" && $(MAKE) uninstall
 #clean-local:
 #	@cd "$(top_builddir)/training" && $(MAKE) clean
 training:
 	@echo "Need to reconfigure project, so there are no errors"
 
-.PHONY: install-langs ScrollView.jar install-jars training
+.PHONY: install-langs ScrollView.jar install-jars $(TRAINING_SUBDIR)
 
 uninstall-hook:
 	rm -rf $(DESTDIR)$(includedir)
@@ -930,12 +926,12 @@ doc-dummy:
 
 doc: doc-dummy
 	-srcdir="$(top_srcdir)" builddir="$(top_builddir)" \
-	version="3.05.00dev" name="tesseract" \
+	version="3.04.01" name="tesseract" \
 	doxygen $(top_srcdir)/doc/Doxyfile
 
 doc-pack: doc
 	-chmod a+r $(top_srcdir)/doc/html/*
-	 @tar --create --directory=$(top_srcdir)/doc/html --verbose --file=- . | gzip -c -9 > $(top_srcdir)/tesseract-3.05.00dev-doc-html.tar.gz;
+	 @tar --create --directory=$(top_srcdir)/doc/html --verbose --file=- . | gzip -c -9 > $(top_srcdir)/tesseract-3.04.01-doc-html.tar.gz;
 
 doc-clean:
 	rm -rf $(top_srcdir)/doc/html/*

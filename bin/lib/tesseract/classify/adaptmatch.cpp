@@ -907,10 +907,8 @@ void Classify::AdaptToChar(TBLOB* Blob, CLASS_ID ClassId, int FontinfoId,
     IClass = ClassForClassId(adaptive_templates->Templates, ClassId);
 
     NumFeatures = GetAdaptiveFeatures(Blob, IntFeatures, &FloatFeatures);
-    if (NumFeatures <= 0) {
-      FreeFeatureSet(FloatFeatures);
+    if (NumFeatures <= 0)
       return;
-    }
 
     // Only match configs with the matching font.
     BIT_VECTOR MatchingFontConfigs = NewBitVector(MAX_NUM_PROTOS);
@@ -1003,8 +1001,6 @@ void Classify::DisplayAdaptedChar(TBLOB* blob, INT_CLASS_STRUCT* int_class) {
               6 | 0x19, matcher_debug_separate_windows);
     UpdateMatchDisplay();
   }
-
-  delete sample;
 #endif
 }
 

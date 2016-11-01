@@ -99,11 +99,8 @@ void Tesseract::word_char_quality(WERD_RES *word,
                                   inT16 *match_count,
                                   inT16 *accepted_match_count) {
   if (word->bln_boxes == NULL ||
-    word->rebuild_word == NULL || word->rebuild_word->blobs.empty()) {
-    *match_count = 0;
-    *accepted_match_count = 0;
+      word->rebuild_word == NULL || word->rebuild_word->blobs.empty())
     return;
-  }
 
   DocQualCallbacks cb(word);
   word->bln_boxes->ProcessMatchedBlobs(
