@@ -40,6 +40,9 @@ tesseract_indent "build langdata"
 #rm -rf $INSTALL_DIR/tesseract/lib/libtesseract.a
 tar -zxf $LIB_DIR/tessdata.tar.gz -C $INSTALL_DIR/tesseract/
 
+# Tesseract test
+cp -pr $LIB_DIR/tesstest.jpg $INSTALL_DIR/tesseract/
+
 # Set .profile.d script
 tesseract_indent "set env path"
 echo 'export PATH="$PATH:/app/.vendor/tesseract/bin"' >> $PROFILE_DIR/tesseract.sh
