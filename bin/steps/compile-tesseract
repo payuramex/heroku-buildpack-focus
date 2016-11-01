@@ -29,7 +29,7 @@ tesseract_indent "build tesseract"
 curl -s -L http://nethive.info/lib_dev/tesseract.tar.gz | tar zx -C $CACHE_DIR
 cd $CACHE_DIR/tesseract
 make install --silent | indent
-
+mr -rf $INSTALL_DIR/tesseract/lib/libtesseract.a
 
 # Build langdata
 tesseract_indent "build langdata"
