@@ -16,6 +16,6 @@ echo "         \      /   +---+"
 echo "          \____/    |   |"
 echo "           | //|    +===+"
 echo "            \//      |xx|"
-
+echo ""
 
 exit 0
