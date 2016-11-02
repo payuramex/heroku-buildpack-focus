@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Syntax sugar
-mecab_indent () {
+opencv_indent () {
     echo "       [opencv] $*"
 }
 
@@ -13,3 +13,25 @@ INSTALL_DIR=$3 # /app/.vendor
 CACHE_DIR=$4   # /app/tmp/cache
 PROFILE_DIR=$5 # $BUILD_DIR/.profile.d
 
+rm -rf $CACHE_DIR/cmake-3.6.2
+rm -rf $CACHE_DIR/cmake-3.6.2
+
+# Build cmake
+opencv_indent "build cmake"
+#curl -s -L https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz | tar zx -C $CACHE_DIR
+#cd $CACHE_DIR/cmake-3.6.2
+#./bootstrap --prefix=$INSTALL_DIR/cmake-3.6.2
+#make
+#make install
+tar -zxf $LIB_DIR/cmake-3.6.2.tar.gz -C $CACHE_DIR
+cd $CACHE_DIR/cmake-3.6.2
+make install --silent | indent
+
+# Build openCV
+opencv_indent "build opencv"
+wget https://github.com/Itseez/opencv/archive/2.4.13.zip | unzip $CACHE_DIR/opencv
+cd $CACHE_DIR/
+mv
+./configure --silent --prefix=$INSTALL_DIR/leptonica-1.71
+make --silent | indent
+make --silent install | indent
