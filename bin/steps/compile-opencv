@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Syntax sugar
+mecab_indent () {
+    echo "       [opencv] $*"
+}
+
+# Initialize
+mecab_indent "initlialize"
+BUILD_DIR=$1   # /tmp/build_#HASH#
+LIB_DIR=$2     # $BIN_DIR/lib
+INSTALL_DIR=$3 # /app/.vendor
+CACHE_DIR=$4   # /app/tmp/cache
+PROFILE_DIR=$5 # $BUILD_DIR/.profile.d
+
