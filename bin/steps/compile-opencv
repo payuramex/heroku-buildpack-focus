@@ -14,25 +14,31 @@ CACHE_DIR=$4   # /app/tmp/cache
 PROFILE_DIR=$5 # $BUILD_DIR/.profile.d
 
 rm -rf $CACHE_DIR/cmake-3.6.2
-rm -rf $CACHE_DIR/cmake-3.6.2
+rm -rf $CACHE_DIR/opencv
 
 # Build cmake
 opencv_indent "build cmake"
-tar -zxf $LIB_DIR/cmake-3.6.2.tar.gz -C $CACHE_DIR
-cd $CACHE_DIR/cmake-3.6.2
-make install | indent
+curl -s -L https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz | tar zx -C $CACHE_DIR
+tar zxf cmake
+./bootstrap --prefix=/app/.vendor/cmake-3.6.2/
+make
+make install
 
 # Build openCV
 opencv_indent "build opencv"
+git clone --depth=1 -b https://github.com/opencv/opencv $CACHE_DIR/opencv
+cd $INSTALL_DIR/opencv
+/app/.vendor/cmake-3.6.2/cmake/bin/cmake -D release CMAKE_PREFIX=/app/.vendor/opencv BUILD_NEW_PYTHON_SUPPORT=ON
+cd release
+make --silent | indent
+make install --silent | indent
+
 #wget https://github.com/Itseez/opencv/archive/2.4.13.zip | unzip $CACHE_DIR/opencv
 #cd $CACHE_DIR/
 #mv
 #./configure --silent --prefix=$INSTALL_DIR/leptonica-1.71
 #make --silent | indent
 #make --silent install | indent
-cp -r $LIB_DIR/opencv $CACHE_DIR
-cd $CACHE_DIR/opencv/release
-make install --silent | indent
 
 # Set .profile.d script
 # Please do not use locally $variables in buildpack when you set environment variables, 
