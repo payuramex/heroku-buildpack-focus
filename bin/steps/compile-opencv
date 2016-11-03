@@ -30,7 +30,7 @@ opencv_indent "build opencv"
 #./configure --silent --prefix=$INSTALL_DIR/leptonica-1.71
 #make --silent | indent
 #make --silent install | indent
-tar -zxf $LIB_DIR/opencv -C $CACHE_DIR
+cp -r $LIB_DIR/opencv $CACHE_DIR
 cd $CACHE_DIR/opencv/release
 make install --silent | indent
 
