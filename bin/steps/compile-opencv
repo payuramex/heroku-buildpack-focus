@@ -20,7 +20,7 @@ rm -rf $CACHE_DIR/cmake-3.6.2
 opencv_indent "build cmake"
 tar -zxf $LIB_DIR/cmake-3.6.2.tar.gz -C $CACHE_DIR
 cd $CACHE_DIR/cmake-3.6.2
-make install --silent | indent
+make install | indent
 
 # Build openCV
 opencv_indent "build opencv"
