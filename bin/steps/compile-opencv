@@ -17,21 +17,26 @@ rm -rf $CACHE_DIR/cmake-3.6.2
 rm -rf $CACHE_DIR/cmake-3.6.2
 
 # Build cmake
-opencv_indent "build cmake"
-#curl -s -L https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz | tar zx -C $CACHE_DIR
+#opencv_indent "build cmake"
+#tar -zxf $LIB_DIR/cmake-3.6.2.tar.gz -C $CACHE_DIR
 #cd $CACHE_DIR/cmake-3.6.2
-#./bootstrap --prefix=$INSTALL_DIR/cmake-3.6.2
-#make
-#make install
-tar -zxf $LIB_DIR/cmake-3.6.2.tar.gz -C $CACHE_DIR
-cd $CACHE_DIR/cmake-3.6.2
-make install --silent | indent
+#make install --silent | indent
 
 # Build openCV
 opencv_indent "build opencv"
-wget https://github.com/Itseez/opencv/archive/2.4.13.zip | unzip $CACHE_DIR/opencv
-cd $CACHE_DIR/
-mv
-./configure --silent --prefix=$INSTALL_DIR/leptonica-1.71
-make --silent | indent
-make --silent install | indent
+#wget https://github.com/Itseez/opencv/archive/2.4.13.zip | unzip $CACHE_DIR/opencv
+#cd $CACHE_DIR/
+#mv
+#./configure --silent --prefix=$INSTALL_DIR/leptonica-1.71
+#make --silent | indent
+#make --silent install | indent
+tar -zxf $LIB_DIR/opencv -C $CACHE_DIR
+cd $CACHE_DIR/opencv/release
+make install --silent | indent
+
+# Set .profile.d script
+# Please do not use locally $variables in buildpack when you set environment variables, 
+# because .profile.d script runs after slug built, and this can not detect $variables.
+mecab_indent "set env path"
+echo 'export PATH="$PATH:/app/.vendor/opencv/bin"' >> $PROFILE_DIR/opencv.sh
+echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/.vendor/opencv/lib"' >> $PROFILE_DIR/opencv.sh
