@@ -18,7 +18,7 @@ rm -rf $CACHE_DIR/mecab-ipadic-2.7.0-20070801
 
 # Build mecab
 mecab_indent "build mecab"
-tar -zxf $LIB_DIR/mecab-0.996.tar.gz -C $CACHE_DIR
+tar -zxf $LIB_DIR/mecab-0.996.tar.gz -C $CACHE_DIR/mecab-0.996
 cd $CACHE_DIR/mecab-0.996
 make install --silent | indent
 
