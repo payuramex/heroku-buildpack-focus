@@ -18,6 +18,6 @@
 #echo "                   \//      |xx|"
 #echo ""
 
-echo "+focus app"
+echo "+focus"
 
 exit 0
