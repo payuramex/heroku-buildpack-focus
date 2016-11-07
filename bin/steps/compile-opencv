@@ -38,8 +38,9 @@ rm -rf $CACHE_DIR/Miniconda-latest-Linux-x86_64.sh
 cd $CACHE_DIR
 curl -Os https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh
 bash Miniconda-latest-Linux-x86_64.sh -p /app/.heroku/miniconda/ -b | indent
-conda install pip --yes | indent
-conda install -c https://conda.anaconda.org/menpo opencv3
+cd /app/.heroku/miniconda/bin
+./conda install pip --yes | indent
+./conda install -c https://conda.anaconda.org/menpo opencv3
 
 # Set .profile.d script
 # Please do not use locally $variables in buildpack when you set environment variables, 
