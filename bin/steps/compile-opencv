@@ -16,6 +16,7 @@ PROFILE_DIR=$5 # $BUILD_DIR/.profile.d
 rm -rf $CACHE_DIR/cmake-3.6.2
 rm -rf $CACHE_DIR/opencv
 rm -rf $CACHE_DIR/Miniconda3-latest-Linux-x86_64.sh
+rm -rf /app/.heroku/miniconda
 
 # Build cmake
 #opencv_indent "build cmake"
