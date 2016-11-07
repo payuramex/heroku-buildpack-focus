@@ -24,7 +24,9 @@ mkdir -p $INSTALL_DIR
 mkdir -p $PROFILE_DIR
  
 # Test
+main_indent "apt-get"
 apt-get -y install libgtk2.0-dev
+main_indent "apt-get end"
 
 # Build buildpacks
 main_indent "build step by step"
