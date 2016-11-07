@@ -39,7 +39,7 @@ rm -rf /app/.heroku
 
 # Build miniconda
 opencv_indent "build opencv with miniconda"
-mkdir -p /app/.heroku/miniconda
+#mkdir -p /app/.heroku/miniconda
 cd $CACHE_DIR
 curl -Os https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
 bash Miniconda3-latest-Linux-x86_64.sh -p /app/.heroku/miniconda/ -b | indent
