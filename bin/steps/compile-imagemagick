@@ -21,6 +21,18 @@ cd $CACHE_DIR/ImageMagick-7.0.3-5
 make --silent | indent
 make --silent install | indent
 
+# Write policy file
+imagemagick_indent "write policy file"
+mkdir -p $INSTALL_DIR/ImageMagick-7.0.3-5/etc/ImageMagick
+cat > $INSTALL_DIR/policy.xml <<EOF
+<policymap>
+  <policy domain="coder" rights="none" pattern="EPHEMERAL" />
+  <policy domain="coder" rights="none" pattern="HTTPS" />
+  <policy domain="coder" rights="none" pattern="MVG" />
+  <policy domain="coder" rights="none" pattern="MSL" />
+</policymap>
+EOF
+
 # Set .profile.d script
 # Please do not use locally $variables in buildpack when you set environment variables, 
 # because .profile.d script runs after slug built, and this can not detect $variables.
