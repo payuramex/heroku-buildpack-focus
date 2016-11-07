@@ -36,11 +36,11 @@ rm -rf $CACHE_DIR/Miniconda-latest-Linux-x86_64.sh
 
 # Build miniconda
 cd $CACHE_DIR
-curl -Os https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh
-bash Miniconda-latest-Linux-x86_64.sh -p /app/.heroku/miniconda/ -b | indent
+curl -Os https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh -p /app/.heroku/miniconda/ -b | indent
 cd /app/.heroku/miniconda/bin
 ./conda install pip --yes | indent
-./conda install -c https://conda.anaconda.org/menpo opencv3
+./conda install -c https://conda.anaconda.org/menpo opencv3 --yes
 
 if [ -f $BUILD_DIR/requirements.txt ]; then
     puts-step "Installing dependencies using Pip"
