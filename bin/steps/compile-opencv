@@ -38,6 +38,8 @@ opencv_indent "build opencv"
 #make install --silent | indent
 cp -pr $LIB_DIR/opencv-3.1.0 $CACHE_DIR
 cd $CACHE_DIR/opencv-3.1.0/build
+$CACHE_DIR/cmake/bin/cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/app/.vendor -D BUILD_opencv_java=OFF -D WITH_IPP=OFF -D WITH_1394=OFF -D WITH_FFMPEG=OFF -D BUILD_EXAMPLES=OFF -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_DOCS=OFF -D BUILD_opencv_python2=ON -D BUILD_opencv_python3=ON -D BUILD_opencv_video=OFF -D BUILD_opencv_videoio=OFF -D BUILD_opencv_videostab=OFF -D PYTHON_EXECUTABLE=$(which python) ..
+make --silent
 make install --silent | indent
 
 # Build miniconda
