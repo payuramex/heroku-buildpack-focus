@@ -15,23 +15,31 @@ PROFILE_DIR=$5 # $BUILD_DIR/.profile.d
 
 rm -rf $CACHE_DIR/cmake-3.6.2
 rm -rf $CACHE_DIR/opencv
+rm -rf $CACHE_DIR/Miniconda-latest-Linux-x86_64.sh
 
 # Build cmake
-opencv_indent "build cmake"
-curl -s -L https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz | tar zx -C $CACHE_DIR
-cd $CACHE_DIR/cmake-3.6.2/
-./bootstrap --prefix=/app/.vendor/cmake-3.6.2/
-make
-make install
+#opencv_indent "build cmake"
+#curl -s -L https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz | tar zx -C $CACHE_DIR
+#cd $CACHE_DIR/cmake-3.6.2/
+#./bootstrap --prefix=/app/.vendor/cmake-3.6.2/
+#make
+#make install
 
 # Build openCV
-opencv_indent "build opencv"
-git clone --depth=1 -b 3.1.0 https://github.com/opencv/opencv $CACHE_DIR/opencv
-cd $CACHE_DIR/opencv
-/app/.vendor/cmake-3.6.2/bin/cmake -D CMAKE_BUILD_TYPE=release CMAKE_PREFIX=/app/.vendor/opencv
-cd release
-make --silent | indent
-make install --silent | indent
+#opencv_indent "build opencv"
+#git clone --depth=1 -b 3.1.0 https://github.com/opencv/opencv $CACHE_DIR/opencv
+#cd $CACHE_DIR/opencv
+#/app/.vendor/cmake-3.6.2/bin/cmake -D CMAKE_BUILD_TYPE=release CMAKE_PREFIX=/app/.vendor/opencv
+#cd release
+#make --silent | indent
+#make install --silent | indent
+
+# Build miniconda
+cd $CACHE_DIR
+curl -Os https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh
+bash Miniconda-latest-Linux-x86_64.sh -p /app/.heroku/miniconda/ -b | indent
+conda install pip --yes | indent
+conda install -c https://conda.anaconda.org/menpo opencv3
 
 # Set .profile.d script
 # Please do not use locally $variables in buildpack when you set environment variables, 
