@@ -22,11 +22,11 @@ rm -rf /app/.vendor
 
 # Build cmake
 #opencv_indent "build cmake"
-#curl -s -L https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz | tar zx -C $CACHE_DIR
-#cd $CACHE_DIR/cmake-3.6.2/
-#./bootstrap --prefix=/app/.vendor/cmake-3.6.2/
-#make
-#make install
+curl -s -L https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz | tar zx -C $CACHE_DIR
+cd $CACHE_DIR/cmake-3.6.2/
+./bootstrap
+make
+make install
 
 # Build openCV
 opencv_indent "build opencv"
