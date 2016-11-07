@@ -42,9 +42,11 @@ cd /app/.heroku/miniconda/bin
 ./conda install pip --yes | indent
 ./conda install -c https://conda.anaconda.org/menpo opencv3 --yes
 
-if [ -f $BUILD_DIR/requirements.txt ]; then
+cd $BUILD_DIR
+
+if [ -f requirements.txt ]; then
     echo "Installing dependencies using Pip" | indent
-    ./pip install -r $BUILD_DIR/requirements.txt  --exists-action=w --allow-all-external | indent
+    app/.heroku/miniconda/bin/pip install -r requirements.txt  --exists-action=w --allow-all-external | indent
 fi
 
 ./conda clean -pt --yes > /dev/null
