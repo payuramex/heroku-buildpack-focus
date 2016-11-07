@@ -28,7 +28,7 @@ make install
 opencv_indent "build opencv"
 git clone --depth=1 -b 3.1.0 https://github.com/opencv/opencv $CACHE_DIR/opencv
 cd $CACHE_DIR/opencv
-/app/.vendor/cmake-3.6.2/bin/cmake -D CMAKE_BUILD_TYPE=release -D CMAKE_PREFIX=/app/.vendor/opencv
+/app/.vendor/cmake-3.6.2/bin/cmake -D CMAKE_BUILD_TYPE=release CMAKE_PREFIX=/app/.vendor/opencv
 cd release
 make --silent | indent
 make install --silent | indent
