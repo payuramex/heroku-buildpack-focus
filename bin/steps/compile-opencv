@@ -16,7 +16,7 @@ PROFILE_DIR=$5 # $BUILD_DIR/.profile.d
 rm -rf $CACHE_DIR/cmake-3.6.2
 rm -rf $CACHE_DIR/opencv
 rm -rf $CACHE_DIR/Miniconda3-latest-Linux-x86_64.sh
-rm -rf /app/.heroku
+rm -rf /app/.vendor
 #ls /app/.heroku/miniconda
 
 
@@ -39,11 +39,11 @@ rm -rf /app/.heroku
 
 # Build miniconda
 opencv_indent "build opencv with miniconda"
-#mkdir -p /app/.heroku/miniconda
+mkdir -p /app/.vendor/miniconda
 cd $CACHE_DIR
 curl -Os https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh -p /app/.heroku/miniconda/ -b | indent
-cd /app/.heroku/miniconda/bin
+bash Miniconda3-latest-Linux-x86_64.sh -p /app/.vendor/miniconda/ -b | indent
+cd /app/.vendor/miniconda/bin
 ./conda install pip --yes | indent
 ./conda install -c https://conda.anaconda.org/menpo opencv3 --yes
 
@@ -51,11 +51,11 @@ opencv_indent "build app's requirements with pip in miniconda"
 cd $BUILD_DIR
 if [ -f requirements.txt ]; then
     echo "Installing dependencies using Pip" | indent
-    /app/.heroku/miniconda/bin/pip install -r requirements.txt  --exists-action=w --allow-all-external | indent
+    /app/.vendor/miniconda/bin/pip install -r requirements.txt  --exists-action=w --allow-all-external | indent
 fi
 
 opencv_indent "clean miniconda"
-cd /app/.heroku/miniconda/bin
+cd /app/.vendor/miniconda/bin
 ./conda clean -pt --yes > /dev/null
 
 # Set .profile.d script
@@ -64,5 +64,5 @@ cd /app/.heroku/miniconda/bin
 opencv_indent "set env path"
 #echo 'export PATH="$PATH:/app/.vendor/opencv/bin"' >> $PROFILE_DIR/opencv.sh
 #echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/.vendor/opencv/lib"' >> $PROFILE_DIR/opencv.sh
-echo 'export PATH="$PATH:/app/.heroku/miniconda/bin"' >> $PROFILE_DIR/conda.sh
-echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/.heroku/miniconda/lib"' >> $PROFILE_DIR/conda.sh
+echo 'export PATH="$PATH:/app/.vendor/miniconda/bin"' >> $PROFILE_DIR/conda.sh
+echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/.vendor/miniconda/lib"' >> $PROFILE_DIR/conda.sh
