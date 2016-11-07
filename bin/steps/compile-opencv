@@ -15,7 +15,7 @@ PROFILE_DIR=$5 # $BUILD_DIR/.profile.d
 
 rm -rf $CACHE_DIR/cmake-3.6.2
 rm -rf $CACHE_DIR/opencv
-rm -rf $CACHE_DIR/Miniconda-latest-Linux-x86_64.sh
+rm -rf $CACHE_DIR/Miniconda3-latest-Linux-x86_64.sh
 
 # Build cmake
 #opencv_indent "build cmake"
@@ -44,7 +44,7 @@ cd /app/.heroku/miniconda/bin
 
 if [ -f $BUILD_DIR/requirements.txt ]; then
     echo "Installing dependencies using Pip" | indent
-    pip install -r $BUILD_DIR/requirements.txt  --exists-action=w --allow-all-external | indent
+    ./pip install -r $BUILD_DIR/requirements.txt  --exists-action=w --allow-all-external | indent
 fi
 
 ./conda clean -pt --yes > /dev/null
