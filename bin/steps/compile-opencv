@@ -37,14 +37,23 @@ rm -rf $CACHE_DIR/Miniconda-latest-Linux-x86_64.sh
 # Build miniconda
 cd $CACHE_DIR
 curl -Os https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh
-bash Miniconda-latest-Linux-x86_64.sh -p /app/.vendor/miniconda/ -b | indent
-cd /app/.vendor/miniconda/bin
+bash Miniconda-latest-Linux-x86_64.sh -p /app/.heroku/miniconda/ -b | indent
+cd /app/.heroku/miniconda/bin
 ./conda install pip --yes | indent
 ./conda install -c https://conda.anaconda.org/menpo opencv3
+
+if [ -f $BUILD_DIR/requirements.txt ]; then
+    puts-step "Installing dependencies using Pip"
+    pip install -r $BUILD_DIR/requirements.txt  --exists-action=w --allow-all-external | indent
+fi
+
+./conda clean -pt --yes > /dev/null
 
 # Set .profile.d script
 # Please do not use locally $variables in buildpack when you set environment variables, 
 # because .profile.d script runs after slug built, and this can not detect $variables.
 mecab_indent "set env path"
-echo 'export PATH="$PATH:/app/.vendor/opencv/bin"' >> $PROFILE_DIR/opencv.sh
-echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/.vendor/opencv/lib"' >> $PROFILE_DIR/opencv.sh
+#echo 'export PATH="$PATH:/app/.vendor/opencv/bin"' >> $PROFILE_DIR/opencv.sh
+#echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/.vendor/opencv/lib"' >> $PROFILE_DIR/opencv.sh
+echo 'export PATH="$PATH:/app/.heroku/miniconda/bin"' >> $PROFILE_DIR/conda.sh
+echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/.heroku/miniconda/lib"' >> $PROFILE_DIR/conda.sh
