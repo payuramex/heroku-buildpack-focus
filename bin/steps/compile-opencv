@@ -38,16 +38,15 @@ opencv_indent "build opencv"
 #make install --silent | indent
 #cp -pr $LIB_DIR/opencv-3.1.0 $CACHE_DIR
 #cd $CACHE_DIR/opencv-3.1.0/build
-cd $INSTALL_DIR/
+cd $CACHE_DIR/
 wget http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/3.1.0/opencv-3.1.0.zip
 unzip opencv-3.1.0.zip
 cd opencv-3.1.0
 mkdir -p build
 cd build
-cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/app/.vendor -D BUILD_opencv_java=OFF -D WITH_IPP=OFF -D WITH_1394=OFF -D WITH_FFMPEG=OFF -D BUILD_EXAMPLES=OFF -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_DOCS=OFF -D BUILD_opencv_python2=ON -D BUILD_opencv_python3=ON -D BUILD_opencv_video=OFF -D BUILD_opencv_videoio=OFF -D BUILD_opencv_videostab=OFF -D PYTHON_EXECUTABLE=$(which python) ..
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=$INSTALL_DIR/opencv-3.1.0 -D BUILD_opencv_java=OFF -D WITH_IPP=OFF -D WITH_1394=OFF -D WITH_FFMPEG=OFF -D BUILD_EXAMPLES=OFF -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_DOCS=OFF -D BUILD_opencv_python2=ON -D BUILD_opencv_python3=ON -D BUILD_opencv_video=OFF -D BUILD_opencv_videoio=OFF -D BUILD_opencv_videostab=OFF -D PYTHON_EXECUTABLE=$(which python) ..
 make --silent
 make install --silent | indent
-rm -rf /app/.vendor/opencv-3.1.0.zip
 
 # Build miniconda
 #opencv_indent "build opencv with miniconda"
