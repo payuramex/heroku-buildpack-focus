@@ -41,7 +41,7 @@ opencv_indent "build opencv"
 #cd $CACHE_DIR/opencv-3.1.0/build
 cd $CACHE_DIR/
 wget http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/3.1.0/opencv-3.1.0.zip
-unzip opencv-3.1.0.zip
+unzip -o opencv-3.1.0.zip
 cd opencv-3.1.0
 mkdir -p build
 cd build
@@ -51,7 +51,7 @@ make install --silent | indent
 
 # Build miniconda
 #opencv_indent "build opencv with miniconda"
-#mkdir -p /app/.vendor/miniconda
+#mkdir -p :q/app/.vendor/miniconda
 #cd $CACHE_DIR
 #curl -Os https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
 #bash Miniconda3-latest-Linux-x86_64.sh -p /app/.vendor/miniconda/ -b | indent
