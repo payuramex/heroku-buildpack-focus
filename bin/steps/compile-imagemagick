@@ -15,7 +15,7 @@ PROFILE_DIR=$5 # $BUILD_DIR/.profile.d
 
 # Build imagemagick
 imagemagick_indent "build imagemagick"
-sudo curl -s -L http://www.imagemagick.org/download/releases/ImageMagick-7.0.1-10.tar.xz | sudo tar Jx -C $CACHE_DIR
+curl -s -L http://www.imagemagick.org/download/releases/ImageMagick-7.0.1-10.tar.xz | tar Jx -C $CACHE_DIR
 cd $CACHE_DIR/ImageMagick-7.0.1-10
 ./configure --silent --prefix=$INSTALL_DIR/ImageMagick-7.0.1-10
 make --silent | indent
