@@ -2,7 +2,7 @@
 
 # Syntax sugar
 mecab_indent () {
-    echo "       [mecab] $*"
+    echo "              [mecab] $*"
 }
 
 # Initialize
@@ -13,25 +13,13 @@ INSTALL_DIR=$3 # /app/.vendor
 CACHE_DIR=$4   # /app/tmp/cache
 PROFILE_DIR=$5 # $BUILD_DIR/.profile.d
 
-rm -rf $CACHE_DIR/mecab-0.996
-rm -rf $CACHE_DIR/mecab-ipadic-2.7.0-20070801
-
 # Build mecab
 mecab_indent "build mecab"
-tar -zxf $LIB_DIR/mecab-0.996.tar.gz -C $CACHE_DIR
-cd $CACHE_DIR/mecab-0.996
-make install --silent | indent
+tar -zxf $LIB_DIR/mecab-0.996.tar.gz -C $INSTALL_DIR/
 
 # Build ipadic
 mecab_indent "build ipadic"
-tar -zxf $LIB_DIR/mecab-ipadic-2.7.0-20070801.tar.gz -C $CACHE_DIR
-cd $CACHE_DIR/mecab-ipadic-2.7.0-20070801
-make install --silent | indent
-
-# Change mecab dictionary path
-mecab_indent "change mecab dictionary path"
-cd $INSTALL_DIR/mecab-0.996/etc/
-echo "dicdir = $INSTALL_DIR/mecab-ipadic-2.7.0-20070801/lib/mecab/dic/ipadic" > mecabrc
+tar -zxf $LIB_DIR/mecab-ipadic-2.7.0-20070801.tar.gz -C $INSTALL_DIR/
 
 # Set .profile.d script
 # Please do not use locally $variables in buildpack when you set environment variables, 

@@ -8,10 +8,6 @@ main_indent() {
     echo "       [+focus] $*"
 }
 
-indent() {
-    sed "s/^/       /"
-}
-
 # Initlialize
 main_indent "initlialize"
 BIN_DIR=$(cd $(dirname $0); pwd)  # absolute path
@@ -24,14 +20,14 @@ mkdir -p $INSTALL_DIR
 mkdir -p $CACHE_DIR
 mkdir -p $PROFILE_DIR
 
-# Build buildpacks
+# Build libraries
 main_indent "build step by step"
 . $BIN_DIR/steps/compile-mecab       $BUILD_DIR $LIB_DIR $INSTALL_DIR $CACHE_DIR $PROFILE_DIR # mecab buildpack
 . $BIN_DIR/steps/compile-tesseract   $BUILD_DIR $LIB_DIR $INSTALL_DIR $CACHE_DIR $PROFILE_DIR # tesseract buildpack
 . $BIN_DIR/steps/compile-opencv      $BUILD_DIR $LIB_DIR $INSTALL_DIR $CACHE_DIR $PROFILE_DIR # opencv buildpack
 . $BIN_DIR/steps/compile-imagemagick $BUILD_DIR $LIB_DIR $INSTALL_DIR $CACHE_DIR $PROFILE_DIR # imagemagick buildpack
 
-# Store buildpacks
+# Store binaries
 (cd $HOME && tar cf - .vendor) | (cd $BUILD_DIR && tar xf -)
 
-main_indent "all buildpack finished"
+main_indent "build finished"

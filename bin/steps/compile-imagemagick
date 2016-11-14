@@ -2,7 +2,7 @@
 
 # Syntax sugar
 imagemagick_indent () {
-    echo "       [imagemagick] $*"
+    echo "              [imagemagick] $*"
 }
 
 # Initialize
@@ -15,23 +15,11 @@ PROFILE_DIR=$5 # $BUILD_DIR/.profile.d
 
 # Build imagemagick
 imagemagick_indent "build imagemagick"
-curl -s -L http://www.imagemagick.org/download/releases/ImageMagick-7.0.1-10.tar.xz | tar Jx -C $CACHE_DIR
-cd $CACHE_DIR/ImageMagick-7.0.1-10
-./configure --silent --prefix=$INSTALL_DIR/ImageMagick-7.0.1-10
-make --silent | indent
-make --silent install | indent
+tar -zxf $LIB_DIR/ImageMagick-7.0.1-10.tar.gz -C $INSTALL_DIR/
 
-# Write policy file
-imagemagick_indent "write policy file"
-mkdir -p $INSTALL_DIR/ImageMagick-7.0.1-10/etc/ImageMagick
-cat > $INSTALL_DIR/policy.xml <<EOF
-<policymap>
-  <policy domain="coder" rights="none" pattern="EPHEMERAL" />
-  <policy domain="coder" rights="none" pattern="HTTPS" />
-  <policy domain="coder" rights="none" pattern="MVG" />
-  <policy domain="coder" rights="none" pattern="MSL" />
-</policymap>
-EOF
+# Copy policy file
+imagemagick_indent "copy policy file"
+cp $LIB_DIR/policy.xml $INSTALL_DIR
 
 # Set .profile.d script
 # Please do not use locally $variables in buildpack when you set environment variables, 
