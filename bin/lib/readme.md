@@ -135,7 +135,8 @@ If you wanna make tarballs for buildpacks, you do following steps step by step. 
 ## Requirement libraries by Cader-14
 
 Following lists is a result of `ldd` command that dynamic executable files installed by this buildpack.<br />
-If following library's version is updated, you have to remake depending tarballs.
+If following library's version is updated, you have to make again tarballs depended itself.<br />
+A Libraries were be strike-through is self-reference in own library, so ignore.
 
 ### mecab-0.996
 * ./mecab:
