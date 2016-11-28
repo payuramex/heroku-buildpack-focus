@@ -25,9 +25,6 @@ tar -zxf $LIB_DIR/mecab-ipadic-2.7.0-20070801.tar.gz -C $INSTALL_DIR/
 # Please do not use locally $variables in buildpack when you set environment variables, 
 # because .profile.d script runs after slug built, and this can not detect $variables.
 mecab_indent "set env path"
-export PATH="$PATH:/app/.vendor/mecab-0.996/bin"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/.vendor/mecab-0.996/lib"
-export MECABRC=/app/.vendor/mecab-0.996/etc/mecabrc
 echo 'echo "mecab.sh is running"' >> $PROFILE_DIR/mecab.sh
 echo 'export PATH="$PATH:/app/.vendor/mecab-0.996/bin"' >> $PROFILE_DIR/mecab.sh
 echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/.vendor/mecab-0.996/lib"' >> $PROFILE_DIR/mecab.sh
