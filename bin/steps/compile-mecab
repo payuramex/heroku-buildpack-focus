@@ -5,6 +5,8 @@ mecab_indent () {
     echo "              [mecab] $*"
 }
 
+echo $PATH
+
 # Initialize
 mecab_indent "initlialize"
 BUILD_DIR=$1   # /tmp/build_#HASH#
