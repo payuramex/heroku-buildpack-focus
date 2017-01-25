@@ -27,6 +27,14 @@ main_indent "build step by step"
 . $BIN_DIR/steps/compile-opencv      $BUILD_DIR $LIB_DIR $INSTALL_DIR $CACHE_DIR $PROFILE_DIR # opencv buildpack
 . $BIN_DIR/steps/compile-imagemagick $BUILD_DIR $LIB_DIR $INSTALL_DIR $CACHE_DIR $PROFILE_DIR # imagemagick buildpack
 
+# Remove unnecessary files
+cd $HOME/.vendor
+find . -name "*.a"|xargs rm
+find . -name "*.h"|xargs rm
+find . -name "*.c"|xargs rm
+find . -name "*.hpp"|xargs rm
+find . -name "*.cpp"|xargs rm
+
 # Store binaries
 (cd $HOME && tar cf - .vendor) | (cd $BUILD_DIR && tar xf -)
 
