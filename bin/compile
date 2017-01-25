@@ -28,6 +28,7 @@ main_indent "build step by step"
 . $BIN_DIR/steps/compile-imagemagick $BUILD_DIR $LIB_DIR $INSTALL_DIR $CACHE_DIR $PROFILE_DIR # imagemagick buildpack
 
 # Remove unnecessary files
+main_indent "remove unnecessary files"
 cd $HOME/.vendor
 find . -name "*.a"|xargs rm
 find . -name "*.h"|xargs rm
