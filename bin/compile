@@ -31,10 +31,10 @@ main_indent "build step by step"
 main_indent "remove unnecessary files"
 cd $INSTALL_DIR
 find . -name "*.a" -exec rm {} \;
-#find . -name "*.h" -exec rm {} \;
-#find . -name "*.c" -exec rm {} \;
-#find . -name "*.hpp" -exec rm {} \;
-#find . -name "*.cpp" -exec rm {} \;
+find . -name "*.h" -exec rm {} \;
+find . -name "*.c" -exec rm {} \;
+find . -name "*.hpp" -exec rm {} \;
+find . -name "*.cpp" -exec rm {} \;
 
 # Store binaries
 (cd $HOME && tar cf - .vendor) | (cd $BUILD_DIR && tar xf -)
