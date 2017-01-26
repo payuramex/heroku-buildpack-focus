@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "+focus"
+printf "+focus\n"
 
 printf "                            ____________________   \n"
 printf "        ,------,           /                    \" \n"
