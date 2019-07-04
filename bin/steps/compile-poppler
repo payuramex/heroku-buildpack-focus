@@ -18,9 +18,14 @@ POPPLER_DIR=${HOME}/vendor/poppler
 poppler_indent "build poppler"
 # mkdir -p $INSTALL_DIR/poppler-0.37.0/
 # tar -zxf $LIB_DIR/poppler-0.37.0.tar.gz -C $INSTALL_DIR/poppler-0.37.0/
-tar -Jxf $LIB_DIR/poppler-0.67.0.tar.xz -C $INSTALL_DIR/
+tar -xf $LIB_DIR/poppler-0.67.0.tar.xz -C $INSTALL_DIR/
 # tar -zxf $LIB_DIR/poppler-0.69.0_1.tar.gz -C $INSTALL_DIR/
-cd /app/.vendor/poppler-0.67.0
+cd $INSTALL_DIR/poppler-0.67.0
+cmake  -DCMAKE_BUILD_TYPE=Release   \
+       -DCMAKE_INSTALL_PREFIX=/usr  \
+       -DTESTDATADIR=$PWD/testfiles \
+       -DENABLE_UNSTABLE_API_ABI_HEADERS=ON     \
+       ..                           &&
 make
 
 poppler_indent "Complete!"
