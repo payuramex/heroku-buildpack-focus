@@ -17,7 +17,7 @@ POPPLER_DIR=${HOME}/vendor/poppler
 
 poppler_indent "build popper"
 #tar -Jxf $LIB_DIR/poppler-0.67.0.tar.xz -C $INSTALL_DIR
-tar -zxf $LIB_DIR/poppler-0.37.0.tar.gz -C $INSTALL_DIR
+tar -zxf $LIB_DIR/poppler-0.37.0.tar.gz -C $INSTALL_DIR/
 
 poppler_indent "Complete!"
 
