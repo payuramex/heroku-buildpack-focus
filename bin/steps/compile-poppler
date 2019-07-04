@@ -9,13 +9,13 @@ poppler_indent () {
 poppler_indent "initlialize"
 BUILD_DIR=$1
 LIB_DIR=$2     # $BIN_DIR/lib
-# INSTALL_DIR=$3 # /app/.vendor
-INSTALL_DIR=$BUILD_DIR/vendor/poppler
+INSTALL_DIR=$3 # /app/.vendor
+# INSTALL_DIR=$BUILD_DIR/vendor/poppler
 CACHE_DIR=$4   # /app/tmp/cache
 PROFILE_DIR=$5 # $BUILD_DIR/.profile.d
 POPPLER_DIR=${HOME}/vendor/poppler
 
-poppler_indent "Untarring poppler.tar.gz into ${INSTALL_DIR}"
+poppler_indent "Untarring poppler.tar.xz into ${INSTALL_DIR}"
 
 mkdir -p $INSTALL_DIR
 tar -Jxf $LIB_DIR/poppler-0.67.0.tar.xz -C $INSTALL_DIR
@@ -23,6 +23,5 @@ tar -Jxf $LIB_DIR/poppler-0.67.0.tar.xz -C $INSTALL_DIR
 poppler_indent "Complete!"
 
 poppler_indent "set env path"
-mkdir -p $BUILD_DIR/.profile.d
 echo "export PATH=\"$POPPLER_DIR/bin:\$PATH\"" > $PROFILE_DIR/poppler.sh
 echo "export LD_LIBRARY_PATH=\"$POPPLER_DIR/lib:\$LD_LIBRARY_PATH\"" >> $PROFILE_DIR/poppler.sh
