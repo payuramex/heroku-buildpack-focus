@@ -27,6 +27,7 @@ cmake  -DCMAKE_BUILD_TYPE=Release   \
        -DENABLE_UNSTABLE_API_ABI_HEADERS=ON     \
        ..                           &&
 make
+sudo make install
 
 poppler_indent "Complete!"
 
