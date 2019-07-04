@@ -23,5 +23,7 @@ tar -Jxf $LIB_DIR/poppler-0.67.0.tar.xz -C $INSTALL_DIR
 poppler_indent "Complete!"
 
 poppler_indent "set env path"
-echo "export PATH=\"/app/.vendor/poppler-0.67.0/bin:\$PATH\"" > $PROFILE_DIR/poppler.sh
-echo "export LD_LIBRARY_PATH=\"/app/.vendor/poppler-0.67.0/lib:\$LD_LIBRARY_PATH\"" >> $PROFILE_DIR/poppler.sh
+#echo 'export PATH=\"/app/.vendor/poppler-0.67.0/bin:\$PATH\"' > $PROFILE_DIR/poppler.sh
+echo 'export PATH="$PATH:/app/.vendor/poppler-0.67.0/bin"' >> $PROFILE_DIR/poppler.sh
+#echo "export LD_LIBRARY_PATH=\"/app/.vendor/poppler-0.67.0/lib:\$LD_LIBRARY_PATH\"" >> $PROFILE_DIR/poppler.sh
+echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/.vendor/poppler-0.67.0/lib"' >> $PROFILE_DIR/poppler.sh
