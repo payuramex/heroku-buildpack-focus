@@ -15,15 +15,12 @@ CACHE_DIR=$4   # /app/tmp/cache
 PROFILE_DIR=$5 # $BUILD_DIR/.profile.d
 POPPLER_DIR=${HOME}/vendor/poppler
 
-poppler_indent "Untarring poppler.tar.xz into ${INSTALL_DIR}"
-
-# mkdir -p $INSTALL_DIR
-tar -Jxf $LIB_DIR/poppler-0.67.0.tar.xz -C $INSTALL_DIR
+poppler_indent "build popper"
+#tar -Jxf $LIB_DIR/poppler-0.67.0.tar.xz -C $INSTALL_DIR
+tar -zxf $LIB_DIR/poppler-0.37.0.tar.gz -C $INSTALL_DIR
 
 poppler_indent "Complete!"
 
 poppler_indent "set env path"
-#echo 'export PATH=\"/app/.vendor/poppler-0.67.0/bin:\$PATH\"' > $PROFILE_DIR/poppler.sh
-echo 'export PATH="$PATH:/app/.vendor/poppler-0.67.0/bin"' >> $PROFILE_DIR/poppler.sh
-#echo "export LD_LIBRARY_PATH=\"/app/.vendor/poppler-0.67.0/lib:\$LD_LIBRARY_PATH\"" >> $PROFILE_DIR/poppler.sh
+echo 'export PATH="$PATH:/app/.vendor/poppler-0.67.0/bin"' > $PROFILE_DIR/poppler.sh
 echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/.vendor/poppler-0.67.0/lib"' >> $PROFILE_DIR/poppler.sh
